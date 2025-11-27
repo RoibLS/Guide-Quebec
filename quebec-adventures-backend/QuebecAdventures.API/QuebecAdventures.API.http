@@ -1,0 +1,6 @@
+@QuebecAdventures.API_HostAddress = http://localhost:5237
+
+GET {{QuebecAdventures.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
