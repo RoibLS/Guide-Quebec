@@ -1,0 +1,53 @@
+<div class="activity-card" (click)="onCardClick()">
+  
+  <!-- Image de couverture -->
+  <div class="activity-card__image-container">
+    <img 
+      [src]="activity.coverImage" 
+      [alt]="activity.title"
+      class="activity-card__image"
+      loading="lazy">
+    
+    <!-- Badge favoris -->
+    <button 
+      class="activity-card__favorite" 
+      (click)="onFavoriteClick($event)"
+      [class.activity-card__favorite--active]="activity.isFavorite"
+      [attr.aria-label]="activity.isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'">
+      {{ activity.isFavorite ? '❤️' : '🤍' }}
+    </button>
+
+    <!-- Note -->
+    <div class="activity-card__rating">
+      <span class="activity-card__rating-star">⭐</span>
+      <span class="activity-card__rating-value">{{ activity.rating }}/10</span>
+    </div>
+  </div>
+
+  <!-- Contenu -->
+  <div class="activity-card__content">
+    
+    <!-- En-tête : Type et Saison -->
+    <div class="activity-card__meta">
+      <span class="activity-card__badge">{{ activityTypeLabel }}</span>
+      <span class="activity-card__badge activity-card__badge--season">{{ mainSeason }}</span>
+    </div>
+
+    <!-- Titre -->
+    <h3 class="activity-card__title">{{ activity.title }}</h3>
+
+    <!-- Description -->
+    <p class="activity-card__description">{{ activity.description }}</p>
+
+    <!-- Footer : Localisation et Distance -->
+    <div class="activity-card__footer">
+      <span class="activity-card__location">
+        📍 {{ activity.city }}
+      </span>
+      <span class="activity-card__distance" *ngIf="distanceLabel">
+        {{ distanceLabel }}
+      </span>
+    </div>
+  </div>
+
+</div>
