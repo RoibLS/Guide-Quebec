@@ -1,0 +1,76 @@
+<div class="home-container">
+  
+  <!-- Section Hero -->
+  <section class="hero">
+    <div class="hero__overlay"></div>
+    <div class="hero__content">
+      <h1 class="hero__title">
+        Découvrez le Québec
+        <span class="hero__title--highlight">Autrement</span>
+      </h1>
+      <p class="hero__subtitle">
+        Votre guide personnel pour explorer activités, restaurants et aventures 
+        au Québec et sur la côte Est
+      </p>
+      <button class="hero__cta" (click)="exploreActivities()">
+        Explorer les activités
+        <span class="hero__cta-icon">→</span>
+      </button>
+    </div>
+    
+    <!-- Scroll indicator -->
+    <div class="hero__scroll-indicator">
+      <span>Défiler</span>
+      <div class="hero__scroll-arrow">↓</div>
+    </div>
+  </section>
+
+  <!-- Section Statistiques -->
+  <section class="stats">
+    <div class="stats__container">
+      <div class="stats__item" *ngFor="let stat of stats">
+        <span class="stats__icon">{{ stat.icon }}</span>
+        <h3 class="stats__value">{{ stat.value }}</h3>
+        <p class="stats__label">{{ stat.label }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Catégories -->
+  <section class="categories">
+    <div class="categories__header">
+      <h2 class="categories__title">Explorez par catégorie</h2>
+      <p class="categories__description">
+        Choisissez votre prochaine aventure parmi nos catégories soigneusement sélectionnées
+      </p>
+    </div>
+
+    <div class="categories__grid">
+      <div 
+        class="category-card" 
+        *ngFor="let category of categories"
+        (click)="navigateToCategory(category.title)"
+        [style.--card-color]="category.color">
+        
+        <div class="category-card__icon">{{ category.icon }}</div>
+        <h3 class="category-card__title">{{ category.title }}</h3>
+        <p class="category-card__description">{{ category.description }}</p>
+        <div class="category-card__arrow">→</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Call to Action -->
+  <section class="cta-section">
+    <div class="cta-section__content">
+      <h2 class="cta-section__title">Prêt à partir à l'aventure ?</h2>
+      <p class="cta-section__text">
+        Rejoignez notre communauté et partagez vos découvertes
+      </p>
+      <button class="cta-section__button" (click)="exploreActivities()">
+        Commencer maintenant
+      </button>
+    </div>
+  </section>
+
+</div>
