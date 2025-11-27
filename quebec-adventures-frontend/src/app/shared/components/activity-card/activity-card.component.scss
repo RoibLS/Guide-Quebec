@@ -1,0 +1,199 @@
+@import '../../../../assets/styles/variables';
+
+.activity-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  // Image container
+  &__image-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+
+    .activity-card:hover & {
+      transform: scale(1.05);
+    }
+  }
+
+  // Bouton favori
+  &__favorite {
+    position: absolute;
+    top: $spacing-md;
+    right: $spacing-md;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    font-size: 1.25rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 2;
+
+    &:hover {
+      transform: scale(1.1);
+      background: white;
+    }
+
+    &--active {
+      animation: heartBeat 0.3s ease;
+    }
+  }
+
+  // Note
+  &__rating {
+    position: absolute;
+    bottom: $spacing-md;
+    left: $spacing-md;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    padding: $spacing-xs $spacing-sm;
+    border-radius: 20px;
+    color: white;
+    font-weight: $font-weight-medium;
+    font-size: 0.9rem;
+  }
+
+  &__rating-star {
+    font-size: 1rem;
+  }
+
+  &__rating-value {
+    font-weight: $font-weight-bold;
+  }
+
+  // Contenu
+  &__content {
+    padding: $spacing-lg;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    flex: 1;
+  }
+
+  // Meta (badges)
+  &__meta {
+    display: flex;
+    gap: $spacing-xs;
+    flex-wrap: wrap;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: $spacing-xs $spacing-sm;
+    background: $background-light;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: $font-weight-medium;
+    color: $text-secondary;
+
+    &--season {
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+  }
+
+  // Titre
+  &__title {
+    font-size: 1.25rem;
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+    margin: 0;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  // Description
+  &__description {
+    font-size: 0.9rem;
+    color: $text-secondary;
+    line-height: 1.5;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+  }
+
+  // Footer
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: $spacing-sm;
+    border-top: 1px solid $background-light;
+    font-size: 0.85rem;
+    color: $text-secondary;
+  }
+
+  &__location {
+    font-weight: $font-weight-medium;
+  }
+
+  &__distance {
+    color: $primary-color;
+    font-weight: $font-weight-medium;
+  }
+}
+
+// Animation heartbeat
+@keyframes heartBeat {
+  0%, 100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+// Responsive
+@media (max-width: $breakpoint-mobile) {
+  .activity-card {
+    &__image-container {
+      height: 160px;
+    }
+
+    &__content {
+      padding: $spacing-md;
+    }
+
+    &__title {
+      font-size: 1.1rem;
+    }
+  }
+}
