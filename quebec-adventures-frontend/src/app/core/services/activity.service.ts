@@ -8,7 +8,7 @@ import { ActivityType, Region } from '../models/enums';
   providedIn: 'root',
 })
 export class ActivityService {
-  private readonly DATA_PATH = '/assets/data/activities.json';
+  private readonly API_URL = 'http://localhost:5237/api/activities';
 
   private activitiesSubject = new BehaviorSubject<Activity[]>([]);
   public activities$ = this.activitiesSubject.asObservable();
@@ -21,7 +21,7 @@ export class ActivityService {
   loadActivities(): Observable<Activity[]> {
     this.loadingSubject.next(true);
 
-    return this.http.get<Activity[]>(this.DATA_PATH).pipe(
+    return this.http.get<Activity[]>(this.API_URL).pipe(
       map((activities) => {
         // Convertir les dates string en objets Date
         const processedActivities = activities.map((activity) => ({
