@@ -16,8 +16,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://localhost:4200")
-                                .AllowAnyHeader()
+                          policy.WithOrigins("http://localhost:4200", "https://localhost:4200")
+								.AllowAnyHeader()
                                 .AllowAnyMethod();
                       });
 });
@@ -25,7 +25,7 @@ builder.Services.AddCors(options =>
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllers(); // <-- déplacé avant Build
+builder.Services.AddControllers();
 
 var app = builder.Build();
 

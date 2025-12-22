@@ -1,0 +1,41 @@
+<div class="page">
+  <header class="page__header">
+    <h1 class="page__title">Liste des activités</h1>
+    <p class="page__subtitle">Restaurants, parcs, aventures et coups de cœur.</p>
+  </header>
+
+  <ng-container *ngIf="!error; else errorTpl">
+    <ng-container *ngIf="activities$ | async as activities; else loadingTpl">
+      <div class="grid">
+        <article class="card" *ngFor="let activity of activities">
+          <div class="card__media" *ngIf="activity.coverImage">
+            <img [src]="activity.coverImage" [alt]="activity.title" loading="lazy" />
+          </div>
+
+          <div class="card__body">
+            <div class="card__top">
+              <h3 class="card__title">{{ activity.title }}</h3>
+              <span class="pill pill--rating">★ {{ activity.rating }}</span>
+            </div>
+
+            <p class="card__desc">{{ activity.description }}</p>
+
+            <div class="meta">
+              <span class="pill">{{ activity.region }}</span>
+              <span class="pill">{{ activity.city }}</span>
+              <span class="pill" *ngIf="activity.type">{{ activity.type }}</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #loadingTpl>
+    <div class="state">Chargement des activités…</div>
+  </ng-template>
+
+  <ng-template #errorTpl>
+    <div class="state state--error">Erreur lors du chargement des activités.</div>
+  </ng-template>
+</div>
