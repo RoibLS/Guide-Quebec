@@ -61,14 +61,14 @@ export class HomeComponent {
   // Navigation vers la liste des activités (à implémenter plus tard)
   exploreActivities(): void {
     console.log('Navigation vers les activités');
-    // this.router.navigate(['/activities']);
+    this.router.navigate(['/activities']);
   }
 
   // Navigation vers une catégorie spécifique
   navigateToCategory(category: string): void {
-    console.log(`Navigation vers: ${category}`);
-    // this.router.navigate(['/activities'], { queryParams: { category } });
+    this.router.navigate(['/activities'], { queryParams: { category } });
   }
+  
   onActivityClick(activity: Activity): void {
     console.log('Activité cliquée:', activity);
   }

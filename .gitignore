@@ -1,0 +1,76 @@
+########################
+# Global patterns
+########################
+
+# Binaires / libs
+*.dll
+*.bin
+*.exe
+*.pdb
+
+# Fichiers temporaires et logs
+*.log
+*.tmp
+*.cache
+
+# Environnements / secrets
+.env
+.env.*.local
+
+########################
+# Backend .NET (quebec-adventures-backend)
+########################
+
+# Dossiers de build .NET
+quebec-adventures-backend/**/bin/
+quebec-adventures-backend/**/obj/
+
+# Fichiers de cache NuGet
+quebec-adventures-backend/**/project.nuget.cache
+quebec-adventures-backend/**/project.assets.json
+quebec-adventures-backend/**/packages.lock.json
+
+# Snapshots EF
+quebec-adventures-backend/**/QuebecAdventuresDbContextModelSnapshot.cs
+
+# Fichiers de configuration utilisateur Visual Studio
+quebec-adventures-backend/**/*.csproj.user
+quebec-adventures-backend/**/.user
+quebec-adventures-backend/**/.suo
+
+# Dossiers de configuration IDE
+quebec-adventures-backend/.vs/
+
+########################
+# Frontend Angular (quebec-adventures-frontend)
+########################
+
+# Dépendances et build Angular/Node
+quebec-adventures-frontend/node_modules/
+quebec-adventures-frontend/dist/
+quebec-adventures-frontend/.angular/
+quebec-adventures-frontend/.nx/
+quebec-adventures-frontend/.turbo/
+
+# Fichiers de build temporaires
+quebec-adventures-frontend/npm-debug.log*
+quebec-adventures-frontend/yarn-debug.log*
+quebec-adventures-frontend/yarn-error.log*
+quebec-adventures-frontend/pnpm-debug.log*
+
+# Config IDE
+quebec-adventures-frontend/.vscode/
+quebec-adventures-frontend/.idea/
+
+########################
+# OS / éditeurs
+########################
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Éditeurs
+*.swp
+*.swo
+*.orig
