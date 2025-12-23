@@ -48,6 +48,7 @@ export enum Region {
   VERMONT = 'Vermont',
   NEW_YORK = 'NewYork',
   ONTARIO = 'Ontario',
+  MAURICIE = 'Mauricie',
   AUTRE = 'Autre'
 }
 

@@ -31,9 +31,20 @@
           <option *ngFor="let r of regions" [value]="r">{{ r }}</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="form-group relative-container">
         <label>Ville *</label>
-        <input type="text" formControlName="city">
+        <input type="text" 
+         formControlName="city" 
+         (input)="onCityInput($event)"
+         (blur)="closeSuggestions()"
+         autocomplete="off" 
+         placeholder="Tapez une ville...">
+        <ul class="suggestions-list" *ngIf="showSuggestions && citySuggestions.length > 0">
+          <li *ngFor="let s of citySuggestions" (click)="selectCity(s)">
+            <strong>{{ s.name }}</strong>
+            <small>{{ s.fullAddress }}</small>
+          </li>
+        </ul>
       </div>
     </div>
 
@@ -54,7 +65,9 @@
       </div>
       <div class="form-group">
         <label>Durée</label>
-        <input type="text" formControlName="duration" placeholder="Ex: 2h">
+        <select formControlName="duration">
+          <option *ngFor="let d of duration" [value]="d">{{ d }}</option>
+        </select>
       </div>
     </div>
 
