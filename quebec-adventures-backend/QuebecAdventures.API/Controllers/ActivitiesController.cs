@@ -1,9 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using QuebecAdventures.Application.Dto;
 using QuebecAdventures.Domain.Entities;
-using QuebecAdventures.Infrastructure.Data.DbContext;
+using QuebecAdventures.Infrastructure.Persistence;
 
 namespace QuebecAdventures.API.Controllers
 {
@@ -11,26 +10,105 @@ namespace QuebecAdventures.API.Controllers
     [Route("api/[controller]")]
     public class ActivitiesController : ControllerBase
     {
-		private readonly QuebecAdventuresDbContext _db;
+		private readonly ApplicationDbContext _context;
 
-		public ActivitiesController(QuebecAdventuresDbContext db)
+		public ActivitiesController(ApplicationDbContext context)
 		{
-			_db = db;
+			_context = context;
 		}
 
+		// GET: api/activities
 		[HttpGet]
-        public async Task<ActionResult<IEnumerable<Activity>>> GetAllAsync()
-        {
-			var activities = await _db.Activities.ToListAsync();
-			return Ok(activities);
+		public async Task<ActionResult<IEnumerable<Activity>>> GetAll()
+		{
+			return await _context.Activities.ToListAsync();
 		}
 
-		[HttpGet("{id}")]
-		public async Task<ActionResult<Activity>> GetById(string id)
+		// GET: api/activities/{id}
+		[HttpGet("{id:guid}")]
+		public async Task<ActionResult<Activity>> GetById(Guid id)
 		{
-			var activity = await _db.Activities.FindAsync(id);
+			var activity = await _context.Activities.FindAsync(id);
 			if (activity == null) return NotFound();
-			return Ok(activity);
+			return activity;
+		}
+
+		// POST: api/activities
+		[HttpPost]
+		public async Task<ActionResult<Activity>> Create(CreateActivityDto dto)
+		{
+			var activity = new Activity
+			{
+				Id = Guid.NewGuid(),
+				Title = dto.Title,
+				Description = dto.Description,
+
+				Type = dto.Type,
+				Region = dto.Region,
+				PriceRange = dto.PriceRange,
+				Difficulty = dto.Difficulty,
+
+				City = dto.City,
+				DistanceFromMontreal = dto.DistanceFromMontreal,
+
+				Season = dto.Season,
+				Duration = dto.Duration,
+				Tags = dto.Tags,
+
+				Images = dto.Images,
+				CoverImage = dto.CoverImage,
+				Website = dto.Website,
+
+				Rating = dto.Rating,
+
+				CreatedBy = "System",
+				CreatedAt = DateTime.UtcNow,
+				UpdatedAt = DateTime.UtcNow
+			};
+
+			_context.Activities.Add(activity);
+			await _context.SaveChangesAsync();
+
+			return CreatedAtAction(nameof(GetById), new { id = activity.Id }, activity);
+		}
+
+		// PUT: api/activities/{id}
+		[HttpPut("{id:guid}")]
+		public async Task<IActionResult> Update(Guid id, CreateActivityDto dto)
+		{
+			var activity = await _context.Activities.FindAsync(id);
+			if (activity == null) return NotFound();
+
+			activity.Title = dto.Title;
+			activity.Description = dto.Description;
+			activity.Type = dto.Type;
+			activity.Season = dto.Season;
+			activity.Duration = dto.Duration;
+			activity.Region = dto.Region;
+			activity.City = dto.City;
+			activity.DistanceFromMontreal = dto.DistanceFromMontreal;
+			activity.Rating = dto.Rating;
+			activity.PriceRange = dto.PriceRange;
+			activity.CoverImage = dto.CoverImage;
+			activity.Images = dto.Images;
+			activity.Tags = dto.Tags;
+
+			await _context.SaveChangesAsync();
+
+			return NoContent();
+		}
+
+		// DELETE: api/activities/{id}
+		[HttpDelete("{id:guid}")]
+		public async Task<IActionResult> Delete(Guid id)
+		{
+			var activity = await _context.Activities.FindAsync(id);
+			if (activity == null) return NotFound();
+
+			_context.Activities.Remove(activity);
+			await _context.SaveChangesAsync();
+
+			return NoContent();
 		}
 	}
 }

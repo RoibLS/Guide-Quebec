@@ -1,11 +1,11 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
-using QuebecAdventures.Infrastructure.Data;
-using QuebecAdventures.Infrastructure.Data.DbContext;
+using QuebecAdventures.Infrastructure.Persistence;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<QuebecAdventuresDbContext>(options =>
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
 	options.UseNpgsql(builder.Configuration.GetConnectionString("QuebecAdventuresDb")));
 
 
@@ -23,9 +23,14 @@ builder.Services.AddCors(options =>
 });
 
 // Add services to the container.
+builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    { 
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 var app = builder.Build();
 

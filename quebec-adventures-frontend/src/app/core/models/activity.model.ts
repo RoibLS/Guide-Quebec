@@ -1,4 +1,4 @@
-import { ActivityType, Season, Duration, Region, Difficulty } from './enums';
+import { ActivityType, Season, Duration, Region, Difficulty, PriceRange } from './enums';
 
 
 // Interface principale pour une activité
@@ -14,10 +14,6 @@ export interface Activity {
   // Localisation
   address?: string;
   city: string;
-  coordinates?: {
-    lat: number;
-    lng: number;
-  };
   
   // Distance depuis Montréal (en km)
   distanceFromMontreal?: number;
@@ -54,15 +50,6 @@ export interface Review {
   comment: string;
   date: Date;
   images?: string[];
-}
-
-// Gamme de prix
-export enum PriceRange {
-  GRATUIT = 'gratuit',
-  ECONOMIQUE = 'economique',      // $
-  MODERE = 'modere',              // $$
-  CHER = 'cher',                  // $$$
-  TRES_CHER = 'tres_cher'         // $$$$
 }
 
 // Interface pour les filtres

@@ -1,52 +1,69 @@
 // Types d'activités
 export enum ActivityType {
-  RESTAURANT = 'restaurant',
-  BRUNCH = 'brunch',
-  SKI_RANDO = 'ski_randonnee',
-  SKI_ALPIN = 'ski_alpin',
-  RANDONNEE = 'randonnee',
-  CAMPING = 'camping',
-  VILLE = 'visite_ville',
-  MUSEE = 'musee',
-  FESTIVAL = 'festival',
-  PARC = 'parc_national',
-  AUTRE = 'autre'
+  RESTAURANT = 'Restaurant',
+  BRUNCH = 'Brunch',
+  SKI_RANDO = 'SkiRandonnee',
+  SKI_ALPIN = 'SkiAlpin',
+  SKI_FOND = 'SkiFond',
+  PATINAGE = 'Patinage',
+  RANDONNEE = 'Randonnee',
+  CAMPING = 'Camping',
+  VILLE = 'Ville',
+  MUSEE = 'Musee',
+  FESTIVAL = 'Festival',
+  PARC = 'Parc',
+  HEBERGEMENT = 'Hebergement',
+  SPA = 'Spa',
+  VELO = 'Velo',
+  KAYAK = 'Kayak',
+  ACTIVITENAUTIQUE = 'ActivitesNautiques',
+  AUTRE = 'Autre',
 }
 
 // Saisons
 export enum Season {
-  HIVER = 'hiver',
-  PRINTEMPS = 'printemps',
-  ETE = 'ete',
-  AUTOMNE = 'automne',
-  TOUTE_ANNEE = 'toute_annee'
+  HIVER = 'Hiver',
+  PRINTEMPS = 'Printemps',
+  ETE = 'Ete',
+  AUTOMNE = 'Automne',
+  TOUTE_ANNEE = 'TouteAnnee'
 }
 
 // Durée
 export enum Duration {
-  DEMI_JOURNEE = 'demi_journee',
-  JOURNEE = 'journee',
-  WEEKEND = 'weekend',
-  SEJOUR = 'sejour'
+  DEMI_JOURNEE = 'DemiJournee',
+  JOURNEE = 'Journee',
+  WEEKEND = 'Weekend',
+  SEJOUR = 'Sejour'
 }
 
 // Régions géographiques
 export enum Region {
-  MONTREAL = 'montreal',
-  LAURENTIDES = 'laurentides',
-  CANTONS_EST = 'cantons_est',
-  CHARLEVOIX = 'charlevoix',
-  QUEBEC_CITY = 'quebec_city',
-  GASPESIE = 'gaspesie',
-  VERMONT = 'vermont',
-  NEW_YORK = 'new_york',
-  AUTRE = 'autre'
+  MONTREAL = 'Montreal',
+  QUEBEC = 'Quebec',
+  LAURENTIDES = 'Laurentides',
+  CANTONS_EST = 'CantonsDeLest',
+  CHARLEVOIX = 'Charlevoix',
+  GASPESIE = 'Gaspesie',
+  VERMONT = 'Vermont',
+  NEW_YORK = 'NewYork',
+  ONTARIO = 'Ontario',
+  AUTRE = 'Autre'
 }
 
+// Gamme de prix
+export enum PriceRange {
+  GRATUIT = 'Gratuit',
+  ECONOMIQUE = 'Economique',      // $
+  MODERE = 'Modere',              // $$
+  CHER = 'Cher',                  // $$$
+  TRES_CHER = 'TresCher'         // $$$$
+}
 // Niveau de difficulté (pour activités sportives)
 export enum Difficulty {
-  FACILE = 'facile',
-  MOYEN = 'moyen',
-  DIFFICILE = 'difficile',
-  EXPERT = 'expert'
+  FACILE = 'Facile',
+  MOYEN = 'Moyen',
+  DIFFICILE = 'Difficile',
+  EXPERT = 'Expert',
+  PASAPPLICABLE = 'PasApplicable'
 }

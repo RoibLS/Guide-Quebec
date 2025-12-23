@@ -1,31 +1,65 @@
 <div class="page">
+  <!-- Header de la page (gardé tel quel, juste regroupé le bouton) -->
   <header class="page__header">
-    <h1 class="page__title">Liste des activités</h1>
-    <p class="page__subtitle">Restaurants, parcs, aventures et coups de cœur.</p>
+    <div class="header-content">
+      <h1 class="page__title">Liste des activités</h1>
+      <p class="page__subtitle">Restaurants, parcs, aventures et coups de cœur.</p>
+    </div>
+    
+    <!-- Bouton Ajouter déplacé ici pour être aligné à droite du titre -->
+    <a routerLink="/activities/new" class="btn-add">
+      <span class="icon">+</span> Ajouter
+    </a>
   </header>
 
   <ng-container *ngIf="!error; else errorTpl">
     <ng-container *ngIf="activities$ | async as activities; else loadingTpl">
+      
+      <!-- La Grille -->
       <div class="grid">
         <article class="card" *ngFor="let activity of activities">
-          <div class="card__media" *ngIf="activity.coverImage">
-            <img [src]="activity.coverImage" [alt]="activity.title" loading="lazy" />
+          
+          <!-- NOUVEAU : Header de carte avec Image + Badges flottants -->
+          <div class="card__header">
+            <!-- Fallback image si vide -->
+            <img [src]="activity.coverImage || 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800'" 
+                 [alt]="activity.title" 
+                 class="card__image"
+                 loading="lazy" />
+            
+            <span class="badge badge--type">{{ activity.type }}</span>
+            <span class="badge badge--price">{{ activity.priceRange }}</span>
           </div>
 
+          <!-- Corps de la carte -->
           <div class="card__body">
             <div class="card__top">
               <h3 class="card__title">{{ activity.title }}</h3>
-              <span class="pill pill--rating">★ {{ activity.rating }}</span>
+              <!-- Affiche la note seulement si > 0 -->
+              <span class="rating-badge" *ngIf="activity.rating > 0">
+                ★ {{ activity.rating }}
+              </span>
             </div>
 
+            <!-- Description tronquée (gérée par CSS) -->
             <p class="card__desc">{{ activity.description }}</p>
 
-            <div class="meta">
-              <span class="pill">{{ activity.region }}</span>
-              <span class="pill">{{ activity.city }}</span>
-              <span class="pill" *ngIf="activity.type">{{ activity.type }}</span>
+            <!-- Localisation -->
+            <div class="card__location">
+              📍 {{ activity.city }}, {{ activity.region }}
             </div>
           </div>
+
+          <!-- NOUVEAU : Footer avec Actions -->
+          <div class="card__footer">
+            <a [routerLink]="['/activities', activity.id, 'edit']" class="btn-action btn-edit">
+              Modifier
+            </a>
+            <button (click)="onDelete(activity.id, $event)" class="btn-action btn-delete">
+              Supprimer
+            </button>
+          </div>
+
         </article>
       </div>
     </ng-container>
