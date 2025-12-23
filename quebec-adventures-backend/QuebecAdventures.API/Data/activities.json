@@ -21,7 +21,6 @@
     "tags": ["gastronomie"]
   },
   {
-    "id": "2",
     "title": "Parc National du Mont-Tremblant",
     "description": "Paradis pour les amoureux de la nature",
     "type": "parc_national",
@@ -31,16 +30,10 @@
     "city": "Mont-Tremblant",
     "distanceFromMontreal": 140,
     "rating": 8.8,
-    "isFavorite": true,
-    "reviews": [],
+    "priceRange": "economique",
     "images": ["https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800"],
     "coverImage": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800",
-    "priceRange": "economique",
-    "difficulty": "moyen",
-    "createdAt": "2025-11-27T00:00:00.000Z",
-    "updatedAt": "2025-11-27T00:00:00.000Z",
-    "createdBy": "user1",
-    "tags": ["nature", "sepaq"]
+    "tags": ["rando","sepaq"]
   },
   {
     "id": "3",

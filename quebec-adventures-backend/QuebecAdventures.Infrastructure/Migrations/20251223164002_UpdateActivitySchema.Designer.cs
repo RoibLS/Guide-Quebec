@@ -6,15 +6,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using QuebecAdventures.Infrastructure.Data.DbContext;
+using QuebecAdventures.Infrastructure.Persistence;
 
 #nullable disable
 
 namespace QuebecAdventures.Infrastructure.Migrations
 {
-    [DbContext(typeof(QuebecAdventuresDbContext))]
-    [Migration("20251220010226_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(ApplicationDbContext))]
+    [Migration("20251223164002_UpdateActivitySchema")]
+    partial class UpdateActivitySchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,8 +28,9 @@ namespace QuebecAdventures.Infrastructure.Migrations
 
             modelBuilder.Entity("QuebecAdventures.Domain.Entities.Activity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -53,8 +54,8 @@ namespace QuebecAdventures.Infrastructure.Migrations
                     b.Property<string>("Difficulty")
                         .HasColumnType("text");
 
-                    b.Property<int>("DistanceFromMontreal")
-                        .HasColumnType("integer");
+                    b.Property<double?>("DistanceFromMontreal")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("Duration")
                         .IsRequired()
@@ -68,7 +69,6 @@ namespace QuebecAdventures.Infrastructure.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("PriceRange")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<double>("Rating")
@@ -77,10 +77,6 @@ namespace QuebecAdventures.Infrastructure.Migrations
                     b.Property<string>("Region")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.PrimitiveCollection<List<string>>("Reviews")
-                        .IsRequired()
-                        .HasColumnType("text[]");
 
                     b.PrimitiveCollection<List<string>>("Season")
                         .IsRequired()
@@ -101,9 +97,62 @@ namespace QuebecAdventures.Infrastructure.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<string>("Website")
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("Activities");
+                });
+
+            modelBuilder.Entity("QuebecAdventures.Domain.Entities.Review", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ActivityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("QuebecAdventures.Domain.Entities.Review", b =>
+                {
+                    b.HasOne("QuebecAdventures.Domain.Entities.Activity", "Activity")
+                        .WithMany("Reviews")
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Activity");
+                });
+
+            modelBuilder.Entity("QuebecAdventures.Domain.Entities.Activity", b =>
+                {
+                    b.Navigation("Reviews");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,78 @@
+<div class="form-container">
+  <h2>{{ isEditMode ? 'Modifier' : 'Ajouter' }} une activité</h2>
+  
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    
+    <!-- Groupe Titre & Type -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>Titre *</label>
+        <input type="text" formControlName="title" placeholder="Ex: Mont-Tremblant">
+      </div>
+      <div class="form-group">
+        <label>Type *</label>
+        <select formControlName="type">
+          <option *ngFor="let t of types" [value]="t">{{ t }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group">
+      <label>Description *</label>
+      <textarea formControlName="description" rows="4"></textarea>
+    </div>
+
+    <!-- Localisation -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>Région *</label>
+        <select formControlName="region">
+          <option *ngFor="let r of regions" [value]="r">{{ r }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Ville *</label>
+        <input type="text" formControlName="city">
+      </div>
+    </div>
+
+    <!-- Détails (Prix, Difficulté, Durée) -->
+    <div class="form-row">
+      <div class="form-group">
+        <label>Prix</label>
+        <select formControlName="priceRange">
+          <option *ngFor="let p of prices" [value]="p">{{ p }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Difficulté</label>
+        <select formControlName="difficulty">
+          <option [ngValue]="null">-- Aucune --</option>
+          <option *ngFor="let d of difficulties" [value]="d">{{ d }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Durée</label>
+        <input type="text" formControlName="duration" placeholder="Ex: 2h">
+      </div>
+    </div>
+
+    <!-- Média & Web -->
+    <div class="form-group">
+      <label>Image de couverture (URL)</label>
+      <input type="text" formControlName="coverImage" placeholder="https://...">
+    </div>
+    
+    <div class="form-group">
+      <label>Site Web</label>
+      <input type="text" formControlName="website" placeholder="https://...">
+    </div>
+
+    <div class="actions">
+      <button type="button" (click)="onCancel()" class="btn-cancel">Annuler</button>
+      <button type="submit" [disabled]="form.invalid" class="btn-submit">Sauvegarder</button>
+    </div>
+
+  </form>
+</div>

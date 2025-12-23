@@ -1,5 +1,5 @@
 // Import des variables globales
-@import '../../../assets/styles/variables';
+@use '../../../assets/styles/variables' as v;
 
 .home-container {
   width: 100%;
@@ -42,15 +42,15 @@
     z-index: 2;
     text-align: center;
     max-width: 900px;
-    padding: 0 $spacing-lg;
+    padding: 0 v.$spacing-lg;
     animation: fadeInUp 1s ease-out;
   }
 
   &__title {
     font-size: clamp(2.5rem, 6vw, 5rem);
-    font-weight: $font-weight-bold;
+    font-weight: v.$font-weight-bold;
     line-height: 1.2;
-    margin-bottom: $spacing-lg;
+    margin-bottom: v.$spacing-lg;
     text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
 
     &--highlight {
@@ -65,7 +65,7 @@
   &__subtitle {
     font-size: clamp(1rem, 2vw, 1.25rem);
     line-height: 1.6;
-    margin-bottom: $spacing-xl;
+    margin-bottom: v.$spacing-xl;
     opacity: 0.95;
     max-width: 700px;
     margin-left: auto;
@@ -75,10 +75,10 @@
   &__cta {
     display: inline-flex;
     align-items: center;
-    gap: $spacing-sm;
-    padding: $spacing-md $spacing-xl;
+    gap: v.$spacing-sm;
+    padding: v.$spacing-md v.$spacing-xl;
     font-size: 1.1rem;
-    font-weight: $font-weight-medium;
+    font-weight: v.$font-weight-medium;
     color: white;
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
@@ -106,7 +106,7 @@
 
   &__scroll-indicator {
     position: absolute;
-    bottom: $spacing-xl;
+    bottom: v.$spacing-xl;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
@@ -118,7 +118,7 @@
       font-size: 0.875rem;
       text-transform: uppercase;
       letter-spacing: 2px;
-      margin-bottom: $spacing-sm;
+      margin-bottom: v.$spacing-sm;
     }
   }
 
@@ -131,7 +131,7 @@
 // SECTION STATISTIQUES
 // ============================================
 .stats {
-  padding: $spacing-xl 0;
+  padding: v.$spacing-xl 0;
   background: white;
 
   &__container {
@@ -139,15 +139,15 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: $spacing-xl;
-    padding: 0 $spacing-lg;
+    gap: v.$spacing-xl;
+    padding: 0 v.$spacing-lg;
   }
 
   &__item {
     text-align: center;
-    padding: $spacing-lg;
+    padding: v.$spacing-lg;
     border-radius: 16px;
-    background: $background-light;
+    background: v.$background-light;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 
     &:hover {
@@ -158,20 +158,20 @@
 
   &__icon {
     font-size: 3rem;
-    margin-bottom: $spacing-md;
+    margin-bottom: v.$spacing-md;
     display: block;
   }
 
   &__value {
     font-size: 2.5rem;
-    font-weight: $font-weight-bold;
-    color: $primary-color;
-    margin-bottom: $spacing-sm;
+    font-weight: v.$font-weight-bold;
+    color: v.$primary-color;
+    margin-bottom: v.$spacing-sm;
   }
 
   &__label {
     font-size: 1rem;
-    color: $text-secondary;
+    color: v.$text-secondary;
     text-transform: uppercase;
     letter-spacing: 1px;
   }
@@ -181,25 +181,25 @@
 // SECTION CATÉGORIES
 // ============================================
 .categories {
-  padding: $spacing-xl * 2 $spacing-lg;
-  background: linear-gradient(to bottom, white 0%, $background-light 100%);
+  padding: v.$spacing-xl * 2 v.$spacing-lg;
+  background: linear-gradient(to bottom, white 0%, v.$background-light 100%);
 
   &__header {
     text-align: center;
     max-width: 700px;
-    margin: 0 auto $spacing-xl * 2;
+    margin: 0 auto v.$spacing-xl * 2;
   }
 
   &__title {
     font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: $font-weight-bold;
-    color: $text-primary;
-    margin-bottom: $spacing-md;
+    font-weight: v.$font-weight-bold;
+    color: v.$text-primary;
+    margin-bottom: v.$spacing-md;
   }
 
   &__description {
     font-size: 1.1rem;
-    color: $text-secondary;
+    color: v.$text-secondary;
     line-height: 1.6;
   }
 
@@ -208,13 +208,13 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: $spacing-lg;
+    gap: v.$spacing-lg;
   }
 }
 
 .category-card {
   position: relative;
-  padding: $spacing-xl;
+  padding: v.$spacing-xl;
   background: white;
   border-radius: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
@@ -255,29 +255,29 @@
 
   &__icon {
     font-size: 3.5rem;
-    margin-bottom: $spacing-md;
+    margin-bottom: v.$spacing-md;
     display: block;
     transition: transform 0.3s ease;
   }
 
   &__title {
     font-size: 1.5rem;
-    font-weight: $font-weight-bold;
-    color: $text-primary;
-    margin-bottom: $spacing-sm;
+    font-weight: v.$font-weight-bold;
+    color: v.$text-primary;
+    margin-bottom: v.$spacing-sm;
   }
 
   &__description {
     font-size: 1rem;
-    color: $text-secondary;
+    color: v.$text-secondary;
     line-height: 1.5;
-    margin-bottom: $spacing-md;
+    margin-bottom: v.$spacing-md;
   }
 
   &__arrow {
     position: absolute;
-    bottom: $spacing-lg;
-    right: $spacing-lg;
+    bottom: v.$spacing-lg;
+    right: v.$spacing-lg;
     font-size: 1.5rem;
     color: var(--card-color);
     opacity: 0;
@@ -287,25 +287,25 @@
 
 // Section Top Activities
 .top-activities {
-  padding: $spacing-xl * 1.5 $spacing-lg;
+  padding: v.$spacing-xl * 1.5 v.$spacing-lg;
   background: white;
 
   &__header {
     text-align: center;
     max-width: 700px;
-    margin: 0 auto $spacing-xl * 2;
+    margin: 0 auto v.$spacing-xl * 2;
   }
 
   &__title {
     font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: $font-weight-bold;
-    color: $text-primary;
-    margin-bottom: $spacing-md;
+    font-weight: v.$font-weight-bold;
+    color: v.$text-primary;
+    margin-bottom: v.$spacing-md;
   }
 
   &__description {
     font-size: 1.1rem;
-    color: $text-secondary;
+    color: v.$text-secondary;
     line-height: 1.6;
   }
 
@@ -314,10 +314,10 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: $spacing-lg;
+    gap: v.$spacing-lg;
   }
 
-  @media (max-width: $breakpoint-tablet) {
+  @media (max-width: v.$breakpoint-tablet) {
     &__grid {
       grid-template-columns: 1fr;
     }
@@ -329,8 +329,8 @@
 // SECTION CTA (Call to Action)
 // ============================================
 .cta-section {
-  padding: $spacing-xl * 1.5 $spacing-lg;
-  background: linear-gradient(135deg, $primary-color 0%, $tertiary-color 100%);
+  padding: v.$spacing-xl * 1.5 v.$spacing-lg;
+  background: linear-gradient(135deg, v.$primary-color 0%, v.$tertiary-color 100%);
   color: white;
   text-align: center;
 
@@ -341,21 +341,21 @@
 
   &__title {
     font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: $font-weight-bold;
-    margin-bottom: $spacing-md;
+    font-weight: v.$font-weight-bold;
+    margin-bottom: v.$spacing-md;
   }
 
   &__text {
     font-size: 1.2rem;
-    margin-bottom: $spacing-xl;
+    margin-bottom: v.$spacing-xl;
     opacity: 0.95;
   }
 
   &__button {
-    padding: $spacing-md $spacing-xl;
+    padding: v.$spacing-md v.$spacing-xl;
     font-size: 1.1rem;
-    font-weight: $font-weight-medium;
-    color: $primary-color;
+    font-weight: v.$font-weight-medium;
+    color: v.$primary-color;
     background: white;
     border: none;
     border-radius: 50px;
@@ -399,7 +399,7 @@
 // ============================================
 // RESPONSIVE
 // ============================================
-@media (max-width: $breakpoint-tablet) {
+@media (max-width: v.$breakpoint-tablet) {
   .hero {
     &__title {
       font-size: 2.5rem;
