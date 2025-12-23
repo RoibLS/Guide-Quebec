@@ -110,5 +110,36 @@ namespace QuebecAdventures.API.Controllers
 
 			return NoContent();
 		}
+
+		[HttpPost("{id}/reviews")]
+		public async Task<ActionResult<Review>> AddReview(Guid id, CreateReviewDto reviewDto)
+		{
+			var activity = await _context.Activities.FindAsync(id);
+			if (activity == null)
+			{
+				return NotFound("Activité introuvable");
+			}
+
+			var review = new Review
+			{
+				Id = Guid.NewGuid(),
+				ActivityId = id,
+				UserName = reviewDto.UserName,
+				Rating = reviewDto.Rating,
+				Comment = reviewDto.Comment,
+				Date = DateTime.UtcNow,
+				UserId = "Anonymous" // Pour l'instant, ou gérer l'auth plus tard
+			};
+
+			_context.Reviews.Add(review);
+
+			// Mettre à jour la note moyenne de l'activité (Optionnel mais cool)
+			// Note : Idéalement, faire ça via une requête SQL ou un service dédié
+			// Pour faire simple ici : on ne le recalcule pas en live pour l'instant
+
+			await _context.SaveChangesAsync();
+
+			return CreatedAtAction(nameof(GetById), new { id = id }, review);
+		}
 	}
 }

@@ -195,6 +195,20 @@
     gap: 12px;
   }
 
+    &__link-wrapper {
+    text-decoration: none; /* Pas de soulignement bleu moche */
+    color: inherit; /* Garde la couleur du texte */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Remplit tout l'espace disponible au-dessus du footer */
+    cursor: pointer;
+  }
+
+   &:hover .card__title {
+    color: #319795; /* Change la couleur du titre au survol de la carte */
+    transition: color 0.2s;
+  }
+
   .btn-action {
     flex: 1;
     padding: 8px;

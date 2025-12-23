@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Activity, CreateActivityDto } from '../../../core/models/activity.model';
+import { Activity, CreateActivityDto, CreateReviewDto } from '../../../core/models/activity.model';
 
 @Injectable({ providedIn: 'root' })
 export class ActivityApiService {
@@ -27,5 +27,9 @@ export class ActivityApiService {
 
   delete(id: string): Observable<void> {
     return this.http.delete<void>(`${this.API_URL}/${id}`);
+  }
+
+  addReview(activityId: string, review: CreateReviewDto): Observable<any> {
+    return this.http.post(`${this.API_URL}/${activityId}/reviews`, review);
   }
 }

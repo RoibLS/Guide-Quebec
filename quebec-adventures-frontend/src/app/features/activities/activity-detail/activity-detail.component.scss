@@ -1,0 +1,40 @@
+.header-image {
+  height: 300px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  color: white;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  }
+}
+
+.header-content {
+  position: relative;
+  padding: 2rem;
+  z-index: 1;
+}
+
+.content {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.review-form {
+  background: #f7fafc;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  
+  .form-group { margin-bottom: 1rem; }
+  input, textarea { width: 100%; padding: 0.5rem; }
+  .btn-submit { background: #48bb78; color: white; padding: 0.5rem 1rem; border: none; cursor: pointer; }
+  .btn-submit:disabled { background: #ccc; }
+}

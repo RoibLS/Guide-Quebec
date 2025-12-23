@@ -17,7 +17,12 @@
       
       <!-- La Grille -->
       <div class="grid">
-        <article class="card" *ngFor="let activity of activities">
+        <article class="card" *ngFor="let activity of activities"
+         (click)="goToDetail(activity.id)" 
+         style="cursor: pointer;"
+        >
+
+          <a [routerLink]="['/activities', activity.id]" class="card__link-wrapper"></a>
           
           <!-- NOUVEAU : Header de carte avec Image + Badges flottants -->
           <div class="card__header">
@@ -53,10 +58,10 @@
           <!-- NOUVEAU : Footer avec Actions -->
           <div class="card__footer">
             <a [routerLink]="['/activities', activity.id, 'edit']" class="btn-action btn-edit">
-              Modifier
+              Modifier l'activité
             </a>
             <button (click)="onDelete(activity.id, $event)" class="btn-action btn-delete">
-              Supprimer
+              Supprimer l'activité
             </button>
           </div>
 

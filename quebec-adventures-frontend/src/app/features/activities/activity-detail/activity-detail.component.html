@@ -1,0 +1,46 @@
+<div class="container" *ngIf="activity$ | async as activity">
+  
+  <!-- Header Image -->
+  <div class="header-image" [style.backgroundImage]="'url(' + (activity.coverImage || '/assets/placeholder.jpg') + ')'">
+    <div class="header-content">
+      <h1>{{ activity.title }}</h1>
+      <span class="badge">{{ activity.type }}</span>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="main-info">
+      <p class="description">{{ activity.description }}</p>
+      
+      <div class="meta">
+        <p>📍 {{ activity.city }}, {{ activity.region }}</p>
+        <p>💰 {{ activity.priceRange }}</p>
+        <p>⭐ {{ activity.rating }}/10</p>
+      </div>
+    </div>
+
+    <!-- Section Avis -->
+    <div class="reviews-section">
+      <h3>Laisser un avis</h3>
+      
+      <form [formGroup]="reviewForm" (ngSubmit)="submitReview()" class="review-form">
+        <div class="form-group">
+          <label>Votre Nom</label>
+          <input type="text" formControlName="userName" placeholder="Jean Tremblay">
+        </div>
+
+        <div class="form-group">
+          <label>Note (/10)</label>
+          <input type="number" formControlName="rating" min="1" max="10">
+        </div>
+
+        <div class="form-group">
+          <label>Commentaire</label>
+          <textarea formControlName="comment" rows="3" placeholder="C'était génial..."></textarea>
+        </div>
+
+        <button type="submit" [disabled]="reviewForm.invalid" class="btn-submit">Envoyer</button>
+      </form>
+    </div>
+  </div>
+</div>
