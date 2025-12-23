@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Activity, CreateActivityDto, CreateReviewDto } from '../../../core/models/activity.model';
+
+export interface ActivityFilters {
+  search?: string;
+  type?: string;     // Ou ActivityType si tu utilises l'enum
+  region?: string;   // Ou Region
+  priceRange?: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class ActivityApiService {
@@ -11,6 +18,19 @@ export class ActivityApiService {
 
   getAll(): Observable<Activity[]> {
     return this.http.get<Activity[]>(this.API_URL);
+  }
+
+  getActivities(filters?: ActivityFilters): Observable<Activity[]> {
+  let params = new HttpParams();
+
+  if (filters) {
+    if (filters.search) params = params.set('search', filters.search);
+    if (filters.type) params = params.set('type', filters.type);
+    if (filters.region) params = params.set('region', filters.region);
+    if (filters.priceRange) params = params.set('priceRange', filters.priceRange);
+  }
+
+  return this.http.get<Activity[]>(this.API_URL, { params });
   }
 
   getById(id: string): Observable<Activity> {

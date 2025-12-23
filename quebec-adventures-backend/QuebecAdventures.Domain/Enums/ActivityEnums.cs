@@ -33,6 +33,7 @@
 		Vermont,
 		NewYork,
 		Ontario,
+		Mauricie,
 		Autre
 	}
 

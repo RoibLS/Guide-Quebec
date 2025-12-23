@@ -12,6 +12,46 @@
     </a>
   </header>
 
+  <!-- BARRE DE FILTRES -->
+  <section class="filters-bar">
+    <form [formGroup]="filterForm" class="filters-form">
+      
+      <!-- Recherche Texte -->
+      <div class="filter-group search-group">
+        <input type="text" formControlName="search" placeholder="Rechercher (ex: poutine, ski)...">
+        <span class="search-icon">🔍</span>
+      </div>
+
+      <!-- Selects -->
+      <div class="filter-group">
+        <select formControlName="region">
+          <option value="">Toutes les régions</option>
+          <option *ngFor="let r of regions" [value]="r">{{ r }}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <select formControlName="type">
+          <option value="">Tous les types</option>
+          <option *ngFor="let t of types" [value]="t">{{ t }}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <select formControlName="priceRange">
+          <option value="">Tous les prix</option>
+          <option *ngFor="let p of prices" [value]="p">{{ p }}</option>
+        </select>
+      </div>
+      
+      <!-- Bouton Reset (Optionnel) -->
+      <button type="button" (click)="filterForm.reset()" class="btn-reset" *ngIf="filterForm.dirty">
+        Effacer
+      </button>
+
+    </form>
+  </section>
+
   <ng-container *ngIf="!error; else errorTpl">
     <ng-container *ngIf="activities$ | async as activities; else loadingTpl">
       

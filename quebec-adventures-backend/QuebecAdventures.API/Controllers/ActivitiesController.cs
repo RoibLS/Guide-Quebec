@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuebecAdventures.Application.Dto;
 using QuebecAdventures.Domain.Entities;
+using QuebecAdventures.Domain.Enums;
 using QuebecAdventures.Infrastructure.Persistence;
 
 namespace QuebecAdventures.API.Controllers
@@ -17,18 +18,51 @@ namespace QuebecAdventures.API.Controllers
 			_context = context;
 		}
 
-		// GET: api/activities
+
 		[HttpGet]
-		public async Task<ActionResult<IEnumerable<Activity>>> GetAll()
+		public async Task<ActionResult<IEnumerable<Activity>>> GetAll(
+			[FromQuery] string? search,
+			[FromQuery] ActivityType? type,
+			[FromQuery] Region? region,
+			[FromQuery] PriceRange? priceRange
+		)
 		{
-			return await _context.Activities.ToListAsync();
+			var query = _context.Activities.Include(a => a.Reviews).AsQueryable();
+
+			if (!string.IsNullOrWhiteSpace(search))
+			{
+				string s = search.ToLower();
+				query = query.Where(a =>
+					a.Title.ToLower().Contains(s) ||
+					a.Description.ToLower().Contains(s) ||
+					a.City.ToLower().Contains(s));
+			}
+
+			if (type.HasValue)
+			{
+				query = query.Where(a => a.Type == type.Value);
+			}
+
+			if (region.HasValue)
+			{
+				query = query.Where(a => a.Region == region.Value);
+			}
+
+			if (priceRange.HasValue)
+			{
+				query = query.Where(a => a.PriceRange == priceRange.Value);
+			}
+
+			return await query.ToListAsync();
 		}
 
 		// GET: api/activities/{id}
 		[HttpGet("{id:guid}")]
 		public async Task<ActionResult<Activity>> GetById(Guid id)
 		{
-			var activity = await _context.Activities.FindAsync(id);
+			var activity = await _context.Activities
+			   .Include(a => a.Reviews)
+			   .FirstOrDefaultAsync(a => a.Id == id);
 			if (activity == null) return NotFound();
 			return activity;
 		}
@@ -114,7 +148,10 @@ namespace QuebecAdventures.API.Controllers
 		[HttpPost("{id}/reviews")]
 		public async Task<ActionResult<Review>> AddReview(Guid id, CreateReviewDto reviewDto)
 		{
-			var activity = await _context.Activities.FindAsync(id);
+			var activity = await _context.Activities
+				.Include(a => a.Reviews)
+				.FirstOrDefaultAsync(a => a.Id == id);
+
 			if (activity == null)
 			{
 				return NotFound("Activité introuvable");
@@ -128,18 +165,19 @@ namespace QuebecAdventures.API.Controllers
 				Rating = reviewDto.Rating,
 				Comment = reviewDto.Comment,
 				Date = DateTime.UtcNow,
-				UserId = "Anonymous" // Pour l'instant, ou gérer l'auth plus tard
+				UserId = "Anonymous"
 			};
 
 			_context.Reviews.Add(review);
 
-			// Mettre à jour la note moyenne de l'activité (Optionnel mais cool)
-			// Note : Idéalement, faire ça via une requête SQL ou un service dédié
-			// Pour faire simple ici : on ne le recalcule pas en live pour l'instant
+			var currentRatings = activity.Reviews.Select(r => r.Rating).ToList();
+			currentRatings.Add(review.Rating);
+
+			activity.Rating = currentRatings.Average();
 
 			await _context.SaveChangesAsync();
 
-			return CreatedAtAction(nameof(GetById), new { id = id }, review);
+			return CreatedAtAction(nameof(GetAll), new { id = id }, review);
 		}
 	}
 }

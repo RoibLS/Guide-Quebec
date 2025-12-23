@@ -42,5 +42,21 @@
         <button type="submit" [disabled]="reviewForm.invalid" class="btn-submit">Envoyer</button>
       </form>
     </div>
+     <div class="reviews-list-section" *ngIf="activity.reviews && activity.reviews.length > 0">
+        <h3>Avis ({{ activity.reviews.length }})</h3>
+        
+        <div class="review-card" *ngFor="let review of activity.reviews">
+            <div class="review-header">
+                <span class="review-author">{{ review.userName }}</span>
+                <span class="review-date">{{ review.date | date:'mediumDate' }}</span>
+                <span class="review-rating">★ {{ review.rating }}/10</span>
+            </div>
+            <p class="review-comment">{{ review.comment }}</p>
+        </div>
+    </div>
+
+    <div class="reviews-list-section" *ngIf="!activity.reviews || activity.reviews.length === 0">
+        <p>Aucun avis pour le moment. Soyez le premier !</p>
+    </div>
   </div>
 </div>

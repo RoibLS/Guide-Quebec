@@ -25,7 +25,7 @@ export class ActivityDetailComponent implements OnInit {
   reviewForm = this.fb.group({
     userName: ['', Validators.required],
     rating: [10, [Validators.required, Validators.min(1), Validators.max(10)]],
-    comment: ['', [Validators.required, Validators.minLength(10)]]
+    comment: ['', [Validators.required, Validators.minLength(3)]]
   });
 
   ngOnInit() {
