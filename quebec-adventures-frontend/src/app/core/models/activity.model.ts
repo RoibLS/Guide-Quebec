@@ -81,3 +81,9 @@ export interface CreateActivityDto {
   images: string[];
   coverImage: string;
 }
+
+export interface CreateReviewDto {
+  userName: string;
+  rating: number;
+  comment: string;
+}

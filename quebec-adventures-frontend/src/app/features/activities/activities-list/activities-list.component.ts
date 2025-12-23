@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, catchError, of } from 'rxjs';
-import { Activity } from '../../../core/models/activity.model';
-import { ActivityApiService } from '../services/activity-api.service';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-
+import { RouterModule, Router } from '@angular/router'; // <--- Ajoute Router ici
+import { ActivityApiService } from '../services/activity-api.service';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-activities-list',
@@ -13,43 +11,36 @@ import { RouterModule } from '@angular/router';
   templateUrl: './activities-list.component.html',
   styleUrls: ['./activities-list.component.scss']
 })
-
 export class ActivitiesListComponent implements OnInit {
-  activities$!: Observable<Activity[]>;
-  error = false;
+  private activityApi = inject(ActivityApiService);
+  private router = inject(Router); // <--- INJECTION DU ROUTER
 
-  constructor(private activityApi: ActivityApiService) {}
-
-  ngOnInit(): void {
-    this.activities$ = this.activityApi.getAll().pipe(
-      catchError(() => {
-        this.error = true;
-        return of([]);
-      })
-    );
-  }
-
-  onDelete(id: string, event: Event) {
-    event.stopPropagation(); // Empêche le clic de traverser si la carte est cliquable
-    
-    if (confirm('Êtes-vous sûr de vouloir supprimer cette activité ?')) {
-      this.activityApi.delete(id).subscribe({
-        next: () => {
-          // Astuce pour rafraîchir la liste sans recharger la page :
-          // On filtre l'observable ou on recharge
-          this.refreshList(); 
-        },
-        error: (err) => console.error('Erreur suppression', err)
-      });
-    }
-  }
-
-  private refreshList() {
-  this.activities$ = this.activityApi.getAll().pipe(
+  activities$ = this.activityApi.getAll().pipe(
     catchError(err => {
       this.error = true;
       return of([]);
     })
   );
+  error = false;
+
+  ngOnInit() {}
+
+  // --- LA MÉTHODE À AJOUTER ---
+  goToDetail(id: string) {
+    this.router.navigate(['/activities', id]);
+  }
+
+  // Ta méthode existante
+  onDelete(id: string, event: Event) {
+    event.stopPropagation();
+    if (confirm('Êtes-vous sûr de vouloir supprimer cette activité ?')) {
+      this.activityApi.delete(id).subscribe({
+        next: () => {
+          // Refresh simple (ou recharger l'observable)
+          window.location.reload(); 
+        },
+        error: (err) => console.error('Erreur suppression', err)
+      });
+    }
   }
 }
