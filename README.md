@@ -2,13 +2,13 @@
 
 ## 📋 Vue d'ensemble du projet
 
-Application web full-stack permettant de cataloguer, partager et noter des activités au Québec et dans l'Est du Canada/États-Unis. Projet pédagogique développé composant par composant en suivant les meilleures pratiques Angular 19 et .NET 8 LTS.
+Application web full-stack permettant de cataloguer, partager et noter des activités au Québec et dans l'Est du Canada/États-Unis. Projet pédagogique développé composant par composant en suivant les meilleures pratiques Angular 19 et .NET 10 LTS.
 
 ## 🎯 Objectifs
 
 - **Principal** : Créer une liste de souhaits d'activités personnalisée pour découvrir le Québec et ses environs
 - **Secondaire** : Fournir un outil pratique pour les proches en visite pour explorer la région selon leurs préférences
-- **Pédagogique** : Apprentissage progressif d'Angular 19, .NET 8, NgRx, RxJS et SCSS
+- **Pédagogique** : Apprentissage progressif d'Angular 19, .NET 10, NgRx, RxJS et SCSS
 
 ## 👥 Contexte personnel
 
@@ -68,7 +68,7 @@ Trois niveaux de permissions :
 - **UI Components** : Angular Material
 
 ### Backend
-- **Framework** : .NET 8 LTS (support jusqu'en 2026)
+- **Framework** : .NET 10 LTS (support jusqu'en 2026)
 - **Architecture** : Clean Architecture [web:17][web:20]
   - Domain Layer (entités, business logic)
   - Application Layer (use cases, services)
@@ -113,7 +113,7 @@ src/
 │ └── styles/ # SCSS globaux
 └── environments/
 
-### Backend - .NET 8 Clean Architecture
+### Backend - .NET 10 Clean Architecture
 
 QuebecAdventures/
 ├── QuebecAdventures.Domain/ # Entités, interfaces, business logic
@@ -143,7 +143,7 @@ QuebecAdventures/
 ## 🎨 Priorités de développement
 
 ### Phase 1 - Fondations visuelles (EN COURS)
-1. ✅ Setup projet Angular 19 + .NET 8
+1. ✅ Setup projet Angular 19 + .NET 10
 2. 🚧 **App.component** : Page d'accueil élégante avec navigation
 3. ⏳ Composant carte d'activité (design uniquement)
 4. ⏳ Layout responsive (header/footer)
@@ -202,7 +202,7 @@ QuebecAdventures/
 - withEntities() pour les collections
 - Integration avec RxJS [web:19]
 
-### .NET 8
+### .NET 10
 - Clean Architecture principles [web:20]
 - Minimal APIs ou Controllers
 - Entity Framework Core (Phase 2)
@@ -242,7 +242,7 @@ L'objectif minimal pour une v1.0 utilisable :
 
 - [Angular 19 Documentation](https://angular.dev/)
 - [NgRx Signal Store](https://ngrx.io/guide/signals)
-- [.NET 8 Documentation](https://learn.microsoft.com/en-us/dotnet/)
+- [.NET 10 Documentation](https://learn.microsoft.com/en-us/dotnet/)
 - [RxJS Documentation](https://rxjs.dev/)
 
 ---

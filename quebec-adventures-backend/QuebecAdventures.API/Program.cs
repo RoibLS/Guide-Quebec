@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using QuebecAdventures.API.Middleware;
 using QuebecAdventures.Infrastructure.Persistence;
 
 
@@ -26,6 +27,8 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     { 
@@ -42,6 +45,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseExceptionHandler();
 app.UseHttpsRedirection();
 app.UseCors(MyAllowSpecificOrigins);
 
