@@ -1,62 +1,84 @@
 <div class="activity-card" (click)="onCardClick()">
   
-  <!-- Image de couverture -->
-  <div class="activity-card__image-container">
+  <!-- HEADER IMAGE -->
+  <div class="activity-card__image-container" (click)="$event.stopPropagation()">
     <app-image-upload 
       [previewUrl]="activity.coverImage" 
       (imageSelected)="onImageSelected($event)">
     </app-image-upload>
     
-    <!-- Badge favoris -->
-    <button 
-      class="activity-card__favorite" 
-      (click)="onFavoriteClick($event)"
-      [class.activity-card__favorite--active]="activity.isFavorite"
-      [attr.aria-label]="activity.isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'">
-      {{ activity.isFavorite ? '❤️' : '🤍' }}
-    </button>
-
-    <!-- Note -->
-    <div class="activity-card__rating">
-      <span class="activity-card__rating-star">⭐</span>
-      <span class="activity-card__rating-value">{{ activity.rating }}/10</span>
+    <!-- Badges Flottants (Overlay) -->
+    <div class="card-overlay-top">
+      <span class="badge badge--blur">{{ activityTypeLabel }}</span>
+      <span class="badge badge--blur" *ngIf="priceLabel">{{ priceLabel }}</span>
     </div>
+
+    <button 
+      class="favorite-btn" 
+      (click)="onFavoriteClick($event)"
+      [class.active]="activity.isFavorite">
+      <span class="heart-icon">{{ activity.isFavorite ? '❤️' : '🤍' }}</span>
+    </button>
   </div>
 
-  <!-- Contenu -->
+  <!-- BODY CONTENT -->
   <div class="activity-card__content">
     
-    <!-- En-tête : Type et Saison -->
-    <div class="activity-card__meta">
-      <span class="activity-card__badge">{{ activityTypeLabel }}</span>
-      <span class="activity-card__badge activity-card__badge--season">{{ mainSeason }}</span>
+    <!-- Ligne Titre + Note -->
+    <div class="card-header">
+      <h3 class="card-title">{{ activity.title }}</h3>
+      <div class="rating-pill" *ngIf="activity.rating > 0">
+        <span class="star">⭐</span> {{ activity.rating }}
+      </div>
     </div>
 
-    <!-- Titre -->
-    <h3 class="activity-card__title">{{ activity.title }}</h3>
+    <!-- Infos Clés (Grille compacte) -->
+    <div class="key-infos">
+      <div class="info-item" *ngIf="difficultyLabel" [style.color]="difficultyColor">
+        <span class="info-icon">⚡</span> {{ difficultyLabel }}
+      </div>
+      <div class="info-item">
+        <span class="info-icon">⏳</span> {{ durationLabel }}
+      </div>
+      <div class="info-item">
+        <span class="info-icon">📅</span> {{ mainSeason }}
+      </div>
+    </div>
 
     <!-- Description -->
-    <p class="activity-card__description">{{ activity.description }}</p>
+    <p class="card-description">{{ activity.description }}</p>
 
-    <!-- Footer -->
-    <div class="activity-card__footer" *ngIf="showAdminActions; else infoFooter" (click)="$event.stopPropagation()">
-      <a [routerLink]="['/activities', activity.id, 'edit']" class="action-btn edit-btn">
-        ✏️ Modifier
-      </a>
-      <button (click)="onDelete($event)" class="action-btn delete-btn">
-        🗑️ Supprimer
-      </button>
+    <!-- Tags (Chips) -->
+    <div class="tags-container" *ngIf="activity.tags?.length">
+      <span class="tag-chip" *ngFor="let tag of activity.tags.slice(0, 3)">#{{ tag }}</span>
+      <span class="tag-chip" *ngIf="activity.tags.length > 3">+{{ activity.tags.length - 3 }}</span>
     </div>
 
-    <ng-template #infoFooter>
-      <div class="activity-card__footer">
-        <span class="activity-card__location">
-          📍 {{ activity.city }}
-        </span>
-        <span class="activity-card__distance" *ngIf="distanceLabel">
-          {{ distanceLabel }}
-        </span>
+    <!-- Footer Actions -->
+    <div class="card-footer" (click)="$event.stopPropagation()">
+      
+      <!-- Zone Gauche : Localisation -->
+      <div class="location-info">
+        <div class="city">📍 {{ activity.city }}</div>
+        <div class="distance" *ngIf="distanceLabel">{{ distanceLabel }}</div>
       </div>
-    </ng-template>
 
+      <!-- Zone Droite : Actions Externes (Site Web) -->
+      <div class="external-actions" *ngIf="!showAdminActions">
+        <button *ngIf="activity.website" 
+                class="icon-btn" 
+                title="Visiter le site web"
+                (click)="openExternalLink(activity.website, $event)">
+          🌐
+        </button>
+      </div>
+
+      <!-- Zone Admin (Si activée) -->
+      <div class="admin-actions" *ngIf="showAdminActions">
+        <a [routerLink]="['/activities', activity.id, 'edit']" class="icon-btn edit" title="Modifier">✏️</a>
+        <button (click)="onDelete($event)" class="icon-btn delete" title="Supprimer">🗑️</button>
+      </div>
+
+    </div>
+  </div>
 </div>
