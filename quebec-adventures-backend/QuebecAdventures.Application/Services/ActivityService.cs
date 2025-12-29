@@ -44,7 +44,9 @@ namespace QuebecAdventures.Application.Services
                 Duration = dto.Duration,
                 Tags = dto.Tags,
                 Images = dto.Images,
-                CoverImage = dto.CoverImage,
+                // Note: CoverImage est maintenant une propriété calculée read-only
+                // Si le DTO contient une URL, on l'ignore ici car on veut des bytes
+                // CoverImage = dto.CoverImage, 
                 Website = dto.Website,
                 Rating = dto.Rating,
                 CreatedBy = "System",
@@ -72,7 +74,7 @@ namespace QuebecAdventures.Application.Services
             activity.Duration = dto.Duration;
             activity.Tags = dto.Tags;
             activity.Images = dto.Images;
-            activity.CoverImage = dto.CoverImage;
+            // activity.CoverImage = dto.CoverImage; // Read-only now
             activity.Website = dto.Website;
             activity.Rating = dto.Rating;
             activity.UpdatedAt = DateTime.UtcNow;
@@ -87,11 +89,12 @@ namespace QuebecAdventures.Application.Services
             await _activityRepository.DeleteActivityAsync(activity);
         }
 
-        public async Task UpdateCoverImageAsync(Guid id, string imageUrl)
+        public async Task UpdateCoverImageAsync(Guid id, byte[] content, string contentType)
         {
             var activity = await _activityRepository.GetByIdAsync(id) ?? throw new KeyNotFoundException($"Activité {id} introuvable");
             
-            activity.CoverImage = imageUrl;
+            activity.CoverImageContent = content;
+            activity.CoverImageMimeType = contentType;
             activity.UpdatedAt = DateTime.UtcNow;
             
             await _unitOfWork.SaveChangesAsync();
