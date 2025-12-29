@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using QuebecAdventures.Application.Interfaces;
 
-namespace QuebecAdventures.Application.Services
+namespace QuebecAdventures.Infrastructure.Services
 {
 	// QuebecAdventures.Infrastructure/Services/ImageService.cs
 	public class ImageService : IImageService

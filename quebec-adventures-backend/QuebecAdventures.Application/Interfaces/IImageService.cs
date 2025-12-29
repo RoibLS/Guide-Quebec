@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 
 namespace QuebecAdventures.Application.Interfaces
 {
@@ -8,6 +9,5 @@ namespace QuebecAdventures.Application.Interfaces
 	{
 		Task<string> UploadImageAsync(IFormFile file, string folderName);
 		void DeleteImage(string imageUrl);
-
 	}
 }
