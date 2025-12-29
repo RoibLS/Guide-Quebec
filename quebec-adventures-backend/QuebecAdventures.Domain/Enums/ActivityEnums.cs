@@ -1,4 +1,4 @@
-﻿namespace QuebecAdventures.Domain.Enums
+namespace QuebecAdventures.Domain.Enums
 {
 	public enum ActivityType
 	{

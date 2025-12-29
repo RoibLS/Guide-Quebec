@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using QuebecAdventures.Domain.Entities;
 
 namespace QuebecAdventures.Infrastructure.Persistence;

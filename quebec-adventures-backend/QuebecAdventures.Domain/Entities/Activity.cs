@@ -8,7 +8,7 @@ namespace QuebecAdventures.Domain.Entities
 		public string Title { get; set; } = string.Empty;
 		public string Description { get; set; } = string.Empty;
 
-		// --- Enums fortement typés ---
+		// --- Enums fortement typÃ©s ---
 		public ActivityType Type { get; set; }
 		public Region Region { get; set; }
 		public PriceRange? PriceRange { get; set; }
@@ -16,7 +16,7 @@ namespace QuebecAdventures.Domain.Entities
 
 
 		// --- Listes (PostgreSQL Array de strings) ---
-		// Correspond à Season[], Tags[], Images[] du front
+		// Correspond Ã  Season[], Tags[], Images[] du front
 		public List<string> Season { get; set; } = new();
 		public List<string> Tags { get; set; } = new();
 		public List<string> Images { get; set; } = new();
@@ -26,10 +26,10 @@ namespace QuebecAdventures.Domain.Entities
 		public double? DistanceFromMontreal { get; set; }
 
 		// --- Infos Pratiques ---
-		public string Duration { get; set; } = string.Empty; // Ex: "2h", "Journée"
+		public string Duration { get; set; } = string.Empty; // Ex: "2h", "JournÃ©e"
 		public string? Website { get; set; }
 
-		// --- Médias ---
+		// --- MÃ©dias ---
 		public string CoverImage { get; set; } = string.Empty;
 
 		// --- Scores & Avis ---

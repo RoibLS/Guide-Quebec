@@ -154,7 +154,7 @@ namespace QuebecAdventures.API.Controllers
 
 			if (activity == null)
 			{
-				return NotFound("Activité introuvable");
+				return NotFound("ActivitÃ© introuvable");
 			}
 
 			var review = new Review

@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using QuebecAdventures.Domain.Enums;
 
 namespace QuebecAdventures.Application.Dto;
@@ -15,8 +15,6 @@ public class CreateActivityDto
 
 	public string City { get; set; } = string.Empty;
 	public int DistanceFromMontreal { get; set; }
-
-
 	public List<string> Season { get; set; } = [];
 	public string Duration { get; set; } = string.Empty;
 
@@ -24,6 +22,5 @@ public class CreateActivityDto
 	public string CoverImage { get; set; } = string.Empty;
 	public List<string> Images { get; set; } = [];
 	public List<string> Tags { get; set; } = [];
-
 	public string? Website { get; set; }
 }

@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Diagnostics;
 using QuebecAdventures.Domain.Exceptions;
 
 namespace QuebecAdventures.API.Middleware
