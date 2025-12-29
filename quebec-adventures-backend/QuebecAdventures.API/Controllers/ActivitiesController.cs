@@ -89,24 +89,27 @@ namespace QuebecAdventures.API.Controllers
             }
         }
 
-        //[HttpPost("{id}/upload-cover")]
-        //public async Task<IActionResult> UploadCover(Guid id, IFormFile file)
-        //{
-        //    try
-        //    {
-        //        var imageUrl = await _imageService.UploadImageAsync(file, "activities");
-        //        await _activityService.UpdateCoverImageAsync(id, imageUrl);
+        [HttpPost("{id}/upload-cover")]
+        public async Task<IActionResult> UploadCover(Guid id, IFormFile file)
+        {
+            try
+            {
+                // 1. Sauvegarde via ImageService
+                var imageUrl = await _imageService.UploadImageAsync(file, "activities");
+                
+                // 2. Mise à jour via ActivityService
+                await _activityService.UpdateCoverImageAsync(id, imageUrl);
 
-        //        return Ok(new { url = imageUrl });
-        //    }
-        //    catch (KeyNotFoundException)
-        //    {
-        //        return NotFound("Activité introuvable");
-        //    }
-        //    catch (ArgumentException ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
+                return Ok(new { url = imageUrl });
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound("Activité introuvable");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
