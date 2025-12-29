@@ -5,11 +5,12 @@ import { ActivityApiService, ActivityFilters } from '../services/activity-api.se
 import { catchError, debounceTime, distinctUntilChanged, of, startWith, switchMap } from 'rxjs';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivityType, PriceRange, Region } from '../../../core/models/enums';
+import { ActivityCardComponent } from '../../../shared/components/activity-card/activity-card.component';
 
 @Component({
   selector: 'app-activities-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, ActivityCardComponent],
   templateUrl: './activities-list.component.html',
   styleUrls: ['./activities-list.component.scss']
 })
@@ -54,14 +55,11 @@ export class ActivitiesListComponent implements OnInit {
 
   ngOnInit() {}
 
-  // --- LA MÉTHODE À AJOUTER ---
-  goToDetail(id: string) {
-    this.router.navigate(['/activities', id]);
+  goToDetail(activity: any) {
+    this.router.navigate(['/activities', activity.id]);
   }
 
-  // Ta méthode existante
-  onDelete(id: string, event: Event) {
-    event.stopPropagation();
+  onDelete(id: string) {
     if (confirm('Êtes-vous sûr de vouloir supprimer cette activité ?')) {
       this.activityApi.delete(id).subscribe(() => {
          this.filterForm.updateValueAndValidity({ onlySelf: false, emitEvent: true });

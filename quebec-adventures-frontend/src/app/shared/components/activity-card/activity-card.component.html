@@ -2,11 +2,10 @@
   
   <!-- Image de couverture -->
   <div class="activity-card__image-container">
-    <img 
-      [src]="activity.coverImage" 
-      [alt]="activity.title"
-      class="activity-card__image"
-      loading="lazy">
+    <app-image-upload 
+      [previewUrl]="activity.coverImage" 
+      (imageSelected)="onImageSelected($event)">
+    </app-image-upload>
     
     <!-- Badge favoris -->
     <button 
@@ -39,15 +38,25 @@
     <!-- Description -->
     <p class="activity-card__description">{{ activity.description }}</p>
 
-    <!-- Footer : Localisation et Distance -->
-    <div class="activity-card__footer">
-      <span class="activity-card__location">
-        📍 {{ activity.city }}
-      </span>
-      <span class="activity-card__distance" *ngIf="distanceLabel">
-        {{ distanceLabel }}
-      </span>
+    <!-- Footer -->
+    <div class="activity-card__footer" *ngIf="showAdminActions; else infoFooter" (click)="$event.stopPropagation()">
+      <a [routerLink]="['/activities', activity.id, 'edit']" class="action-btn edit-btn">
+        ✏️ Modifier
+      </a>
+      <button (click)="onDelete($event)" class="action-btn delete-btn">
+        🗑️ Supprimer
+      </button>
     </div>
-  </div>
+
+    <ng-template #infoFooter>
+      <div class="activity-card__footer">
+        <span class="activity-card__location">
+          📍 {{ activity.city }}
+        </span>
+        <span class="activity-card__distance" *ngIf="distanceLabel">
+          {{ distanceLabel }}
+        </span>
+      </div>
+    </ng-template>
 
 </div>

@@ -22,6 +22,18 @@
     width: 100%;
     height: 200px;
     overflow: hidden;
+
+      ::ng-deep app-image-upload {
+      .upload-container {
+        height: 200px !important;
+        border-radius: 0 !important;
+        border: none !important;
+        background: #f0f2f5; 
+      }
+
+      .upload-icon { font-size: 2rem !important; margin-bottom: 0.5rem !important; }
+      .upload-text { font-size: 0.9rem !important; }
+      .upload-subtext { display: none !important; }
   }
 
   &__image {
@@ -168,6 +180,37 @@
   }
 }
 
+/* Ajoute ça à la fin de ton fichier SCSS */
+.action-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.2s;
+  text-decoration: none;
+
+  &.edit-btn {
+    background: #e3f2fd;
+    color: #1565c0;
+    margin-right: 8px;
+    &:hover { background: #bbdefb; }
+  }
+
+  &.delete-btn {
+    background: #ffebee;
+    color: #c62828;
+    &:hover { background: #ffcdd2; }
+  }
+}
+
+
 // Animation heartbeat
 @keyframes heartBeat {
   0%, 100% {
@@ -196,4 +239,5 @@
       font-size: 1.1rem;
     }
   }
+}
 }

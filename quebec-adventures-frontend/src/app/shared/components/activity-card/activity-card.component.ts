@@ -1,18 +1,23 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { Activity } from '../../../core/models/activity.model';
+import { ImageUploadComponent } from '../image-upload/image-upload.component';
 
 @Component({
   selector: 'app-activity-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ImageUploadComponent, RouterModule],
   templateUrl: './activity-card.component.html',
   styleUrls: ['./activity-card.component.scss']
 })
 export class ActivityCardComponent {
   @Input({ required: true }) activity!: Activity;
+  @Input() showAdminActions = false;
+
   @Output() cardClick = new EventEmitter<Activity>();
   @Output() favoriteToggle = new EventEmitter<string>();
+  @Output() deleteClick = new EventEmitter<string>();
 
   onCardClick(): void {
     this.cardClick.emit(this.activity);
@@ -23,7 +28,15 @@ export class ActivityCardComponent {
     this.favoriteToggle.emit(this.activity.id);
   }
 
-  // Afficher la saison principale (première de la liste)
+  onImageSelected(file: File): void {
+    console.log('Nouvelle image pour activité:', this.activity.title, file);
+  }
+
+  onDelete(event: Event): void {
+    event.stopPropagation();
+    this.deleteClick.emit(this.activity.id);
+  }
+
   get mainSeason(): string {
     const seasonLabels: Record<string, string> = {
       'hiver': '❄️ Hiver',
@@ -35,7 +48,6 @@ export class ActivityCardComponent {
     return seasonLabels[this.activity.season[0]] || '';
   }
 
-  // Afficher le type d'activité
   get activityTypeLabel(): string {
     const typeLabels: Record<string, string> = {
       'restaurant': '🍽️ Restaurant',
