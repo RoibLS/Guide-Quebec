@@ -86,5 +86,15 @@ namespace QuebecAdventures.Application.Services
 
             await _activityRepository.DeleteActivityAsync(activity);
         }
+
+        public async Task UpdateCoverImageAsync(Guid id, string imageUrl)
+        {
+            var activity = await _activityRepository.GetByIdAsync(id) ?? throw new KeyNotFoundException($"Activité {id} introuvable");
+            
+            activity.CoverImage = imageUrl;
+            activity.UpdatedAt = DateTime.UtcNow;
+            
+            await _unitOfWork.SaveChangesAsync();
+        }
     }
 }
