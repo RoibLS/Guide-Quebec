@@ -9,7 +9,5 @@ namespace QuebecAdventures.Domain.Interfaces
         Task<T?> GetByIdAsync(Guid id);
         Task AddAsync(T entity);
         void Remove(T entity);
-        // Note: Update est souvent implicite avec le tracking EF Core, 
-        // ou on peut ajouter une méthode Update(T entity)
     }
 }

@@ -11,11 +11,8 @@ namespace QuebecAdventures.Application.Interfaces
     {
         Task<IEnumerable<Activity>> GetAllAsync(string? search, ActivityType? type, Region? region, PriceRange? priceRange);
         Task<Activity?> GetByIdAsync(Guid id);
-        Task<Activity> CreateAsync(CreateActivityDto dto);
+        Task<Activity> AddActivityAsync(CreateActivityDto dto);
         Task UpdateAsync(Guid id, CreateActivityDto dto);
         Task DeleteAsync(Guid id);
-
-        Task<Review> AddReviewAsync(Guid activityId, CreateReviewDto reviewDto);
-        Task UpdateCoverImageAsync(Guid id, string imageUrl);
     }
 }

@@ -11,12 +11,14 @@ namespace QuebecAdventures.API.Controllers
     public class ActivitiesController : ControllerBase
     {
         private readonly IActivityService _activityService;
+        private readonly IReviewService _reviewService;
         private readonly IImageService _imageService;
 
-        public ActivitiesController(IActivityService activityService, IImageService imageService)
+        public ActivitiesController(IActivityService activityService, IImageService imageService, IReviewService reviewService)
         {
             _activityService = activityService;
             _imageService = imageService;
+            _reviewService = reviewService;
         }
 
         [HttpGet]
@@ -41,7 +43,7 @@ namespace QuebecAdventures.API.Controllers
         [HttpPost]
         public async Task<ActionResult<Activity>> Create(CreateActivityDto dto)
         {
-            var activity = await _activityService.CreateAsync(dto);
+            var activity = await _activityService.AddActivityAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = activity.Id }, activity);
         }
 
@@ -78,7 +80,7 @@ namespace QuebecAdventures.API.Controllers
         {
             try
             {
-                var review = await _activityService.AddReviewAsync(id, reviewDto);
+                var review = await _reviewService.AddReviewAsync(id, reviewDto);
                 return CreatedAtAction(nameof(GetById), new { id = id }, review);
             }
             catch (KeyNotFoundException)
@@ -87,24 +89,24 @@ namespace QuebecAdventures.API.Controllers
             }
         }
 
-        [HttpPost("{id}/upload-cover")]
-        public async Task<IActionResult> UploadCover(Guid id, IFormFile file)
-        {
-            try
-            {
-                var imageUrl = await _imageService.UploadImageAsync(file, "activities");
-                await _activityService.UpdateCoverImageAsync(id, imageUrl);
+        //[HttpPost("{id}/upload-cover")]
+        //public async Task<IActionResult> UploadCover(Guid id, IFormFile file)
+        //{
+        //    try
+        //    {
+        //        var imageUrl = await _imageService.UploadImageAsync(file, "activities");
+        //        await _activityService.UpdateCoverImageAsync(id, imageUrl);
 
-                return Ok(new { url = imageUrl });
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound("Activité introuvable");
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        //        return Ok(new { url = imageUrl });
+        //    }
+        //    catch (KeyNotFoundException)
+        //    {
+        //        return NotFound("Activité introuvable");
+        //    }
+        //    catch (ArgumentException ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
     }
 }
