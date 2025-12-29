@@ -1,0 +1,28 @@
+    <div 
+      class="upload-container"
+      [class.has-image]="previewUrl"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event)">
+      
+      <!-- Prévisualisation en mode Hero (Image de fond) -->
+      <div *ngIf="previewUrl" class="preview-hero" [style.background-image]="'url(' + previewUrl + ')'">
+        <div class="preview-overlay">
+          <button class="remove-btn" (click)="removeImage($event)">🗑️ Changer d'image</button>
+        </div>
+      </div>
+
+      <!-- Zone d'upload (visible si pas d'image) -->
+      <div *ngIf="!previewUrl" class="upload-placeholder" (click)="fileInput.click()">
+        <input 
+          #fileInput 
+          type="file" 
+          hidden 
+          accept="image/*" 
+          (change)="onFileSelected($event)">
+        
+        <div class="upload-icon">📸</div>
+        <p class="upload-text">Glisse ta plus belle photo ici</p>
+        <span class="upload-subtext">ou clique pour parcourir</span>
+      </div>
+    </div>
