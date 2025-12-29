@@ -4,12 +4,13 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivityApiService } from '../services/activity-api.service';
 import { Activity, CreateReviewDto } from '../../../core/models/activity.model';
-import { Observable, switchMap, tap } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
+import { ImageUploadComponent } from '../../../shared/components/image-upload/image-upload.component';
 
 @Component({
   selector: 'app-activity-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, ImageUploadComponent],
   templateUrl: './activity-detail.component.html',
   styleUrls: ['./activity-detail.component.scss']
 })
@@ -57,5 +58,10 @@ export class ActivityDetailComponent implements OnInit {
       },
       error: (err) => console.error('Erreur review', err)
     });
+  }
+  
+  onHeaderImageSelected(file: File, activity: Activity) {
+    console.log('Nouvelle image header pour', activity.title, file);
+    // TODO: Appeler ton service API ici pour sauvegarder (ex: this.activityApi.uploadImage(id, file)...)
   }
 }
