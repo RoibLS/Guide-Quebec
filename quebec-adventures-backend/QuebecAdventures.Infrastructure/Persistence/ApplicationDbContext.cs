@@ -22,6 +22,8 @@ public class ApplicationDbContext : DbContext
 			entity.Property(e => e.Region).HasConversion<string>();
 			entity.Property(e => e.PriceRange).HasConversion<string>();
 			entity.Property(e => e.Difficulty).HasConversion<string>();
+            // 👇 AJOUT DE LA LIGNE MANQUANTE
+			entity.Property(e => e.Duration).HasConversion<string>();
 		});
 	}
 
