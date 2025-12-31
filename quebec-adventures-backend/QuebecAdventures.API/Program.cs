@@ -5,12 +5,7 @@ using QuebecAdventures.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// --- 1. CONFIGURATION DES SERVICES (Clean Architecture) ---
-
-// Enregistrement de la couche Application (Services Métier)
 builder.Services.AddApplication();
-
-// Enregistrement de la couche Infrastructure (DB, Repos, Services externes)
 builder.Services.AddInfrastructure(builder.Configuration);
 
 // ----------------------------------------------------------

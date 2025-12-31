@@ -12,12 +12,10 @@ public class CreateActivityDto
 	public Region Region { get; set; }
 	public PriceRange? PriceRange { get; set; }
 	public Difficulty? Difficulty { get; set; }
-
 	public string City { get; set; } = string.Empty;
 	public int DistanceFromMontreal { get; set; }
 	public List<string> Season { get; set; } = [];
-	public string Duration { get; set; } = string.Empty;
-
+	public Duration Duration { get; set; }
 	public double Rating { get; set; }
 	public string CoverImage { get; set; } = string.Empty;
 	public List<string> Images { get; set; } = [];

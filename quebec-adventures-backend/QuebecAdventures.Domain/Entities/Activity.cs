@@ -15,7 +15,7 @@ namespace QuebecAdventures.Domain.Entities
         public string City { get; set; } = string.Empty;
         public double? DistanceFromMontreal { get; set; }
         
-        public List<Season> Season { get; set; } = new();
+        public List<string> Season { get; set; } = new();
         public Duration Duration { get; set; }
         public List<string> Tags { get; set; } = new();
         public List<string> Images { get; set; } = new();

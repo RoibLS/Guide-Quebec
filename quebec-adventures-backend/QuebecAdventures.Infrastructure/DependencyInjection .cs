@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using QuebecAdventures.Application.Interfaces;
 using QuebecAdventures.Domain.Interfaces;
 using QuebecAdventures.Infrastructure.Persistence;
+using QuebecAdventures.Application.Interfaces;
 using QuebecAdventures.Infrastructure.Services;
 
 namespace QuebecAdventures.Infrastructure
@@ -12,7 +12,7 @@ namespace QuebecAdventures.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            // Database
+            // DB Context
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(configuration.GetConnectionString("QuebecAdventuresDb")));
 
@@ -21,7 +21,7 @@ namespace QuebecAdventures.Infrastructure
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IActivityRepository, ActivityRepository>();
 
-            // Services d'infrastructure (fichiers, emails, etc.)
+            // Infra Services
             services.AddScoped<IImageService, ImageService>();
 
             return services;
