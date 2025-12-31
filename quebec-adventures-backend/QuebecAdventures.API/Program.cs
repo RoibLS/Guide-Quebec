@@ -1,14 +1,19 @@
 using System.Text.Json.Serialization;
-using Microsoft.EntityFrameworkCore;
 using QuebecAdventures.API.Middleware;
-using QuebecAdventures.Infrastructure.Persistence;
-
+using QuebecAdventures.Application;
+using QuebecAdventures.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-	options.UseNpgsql(builder.Configuration.GetConnectionString("QuebecAdventuresDb")));
+// --- 1. CONFIGURATION DES SERVICES (Clean Architecture) ---
 
+// Enregistrement de la couche Application (Services Métier)
+builder.Services.AddApplication();
+
+// Enregistrement de la couche Infrastructure (DB, Repos, Services externes)
+builder.Services.AddInfrastructure(builder.Configuration);
+
+// ----------------------------------------------------------
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -23,8 +28,6 @@ builder.Services.AddCors(options =>
                       });
 });
 
-// Add services to the container.
-builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
