@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using QuebecAdventures.Domain.Enums;
 
 namespace QuebecAdventures.Domain.Entities
@@ -6,38 +5,52 @@ namespace QuebecAdventures.Domain.Entities
     public class Activity
     {
         public Guid Id { get; set; }
+
+        // === INFORMATIONS PRINCIPALES ===
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public ActivityType Type { get; set; }
         public Region Region { get; set; }
+
+
+        // === LOCALISATION ===
+        public string City { get; set; } = string.Empty;
+        public string? Address { get; set; }
+        public double? DistanceFromMontreal { get; set; }
+
+
+        // === STATUT JOURNAL / WISHLIST ===
+        public bool IsVisited { get; set; } = false;
+        public DateTime? VisitedAt { get; set; }
+        public bool IsFavorite { get; set; } = false;
+        public string? WishlistNote { get; set; }
+
+        // === CARACTÉRISTIQUES ===
+        public List<Season> Seasons { get; set; } = new();  // Renommé et typé correctement
+        public Duration Duration { get; set; }
         public PriceRange? PriceRange { get; set; }
         public Difficulty? Difficulty { get; set; }
-        public string City { get; set; } = string.Empty;
-        public double? DistanceFromMontreal { get; set; }
-        
-        public List<string> Season { get; set; } = new();
-        public Duration Duration { get; set; }
-        public List<string> Tags { get; set; } = new();
+
+        // === MÉDIAS ===
+        public string CoverImage { get; set; } = string.Empty;  // URL externe uniquement
         public List<string> Images { get; set; } = new();
-        
-        // --- CHANGEMENT ICI : Stockage DB ---
-        // On garde CoverImage (string) temporairement si besoin pour la migration,
-        // mais pour le stockage binaire :
-        public byte[]? CoverImageContent { get; set; } 
-        public string? CoverImageMimeType { get; set; } // ex: image/jpeg
-        
-        // Cette propriété calculée servira d'URL pour le frontend
-        // Elle pointera vers notre endpoint API qui servira l'image
-        public string? CoverImage => Id != Guid.Empty ? $"/api/activities/{Id}/cover" : null;
-        // ------------------------------------
 
+        // === INFOS PRATIQUES ===
         public string? Website { get; set; }
-        public double Rating { get; set; }
+        public List<string> Tags { get; set; } = new();
 
+        // === MÉTADONNÉES ===
         public string CreatedBy { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
+        // === RELATIONS ===
         public ICollection<Review> Reviews { get; set; } = new List<Review>();
+
+        // === PROPRIÉTÉ CALCULÉE (pas en base) ===
+        // Calcule la note moyenne depuis les reviews existantes
+        public double? AverageRating => Reviews.Any() 
+            ? Reviews.Average(r => r.Rating) 
+            : null;
     }
 }

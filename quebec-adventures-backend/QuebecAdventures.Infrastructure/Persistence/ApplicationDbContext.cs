@@ -14,16 +14,21 @@ public class ApplicationDbContext : DbContext
 	{
 		base.OnModelCreating(modelBuilder);
 
-		// Configuration de l'entité Activity
 		modelBuilder.Entity<Activity>(entity =>
 		{
-			// Conversion des Enums en String pour la DB
 			entity.Property(e => e.Type).HasConversion<string>();
 			entity.Property(e => e.Region).HasConversion<string>();
 			entity.Property(e => e.PriceRange).HasConversion<string>();
 			entity.Property(e => e.Difficulty).HasConversion<string>();
-            // 👇 AJOUT DE LA LIGNE MANQUANTE
 			entity.Property(e => e.Duration).HasConversion<string>();
+			entity.Property(e => e.Seasons)
+            .HasConversion(
+                v => string.Join(',', v.Select(s => s.ToString())),
+                v => v.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                      .Select(s => Enum.Parse<Season>(s))
+                      .ToList()
+            );
+			entity.Ignore(e => e.AverageRating);
 		});
 	}
 
