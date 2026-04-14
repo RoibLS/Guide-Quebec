@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, map, catchError, of } from 'rxjs';
 import { Activity, ActivityFilters } from '../models/activity.model';
 import { ActivityType, Region } from '../models/enums';
+import { environment } from '../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class ActivityService {
-  private readonly API_URL = 'http://localhost:5237/api/activities';
-
+  private readonly API_URL = `${environment.apiUrl}/api/activities`;
   private activitiesSubject = new BehaviorSubject<Activity[]>([]);
   public activities$ = this.activitiesSubject.asObservable();
 
