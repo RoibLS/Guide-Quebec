@@ -62,4 +62,13 @@ namespace QuebecAdventures.Domain.Enums
 		Weekend,
 		Sejour
 	}
+
+    public enum Season
+    {
+        Hiver,
+        Printemps,
+        Ete,
+        Automne,
+        Tout
+    }
 }

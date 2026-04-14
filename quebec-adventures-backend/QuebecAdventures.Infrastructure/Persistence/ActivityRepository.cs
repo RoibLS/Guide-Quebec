@@ -47,11 +47,5 @@ namespace QuebecAdventures.Infrastructure.Persistence
             await _context.Activities.AddAsync(activity);
             await _context.SaveChangesAsync();
         }
-
-        public void UpdateAverageRating(Activity activity)
-        {
-            var currentRatings = activity.Reviews.Select(r => r.Rating).ToList();
-            activity.Rating = currentRatings.Average();
-        }
     }
 }

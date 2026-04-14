@@ -12,6 +12,5 @@ namespace QuebecAdventures.Domain.Interfaces
         Task<Activity?> GetByIdIncludingReviewsAsync(Guid id);
         Task AddActivityAsync(Activity activity);
         Task DeleteActivityAsync(Activity id);
-        void UpdateAverageRating(Activity activity);
     }
 }

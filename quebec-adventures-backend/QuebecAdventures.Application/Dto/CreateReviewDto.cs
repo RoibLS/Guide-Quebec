@@ -8,10 +8,10 @@ namespace QuebecAdventures.Application.Dto
 	public class CreateReviewDto
 	{
 		[Required]
-		public string UserName { get; set; } = string.Empty;
+        public string UserId { get; set; } = string.Empty;
 
-		[Range(1, 10)]
-		public int Rating { get; set; }
+        [Range(1.0, 10.0)]
+        public double Rating { get; set; }
 
 		[Required]
 		public string Comment { get; set; } = string.Empty;

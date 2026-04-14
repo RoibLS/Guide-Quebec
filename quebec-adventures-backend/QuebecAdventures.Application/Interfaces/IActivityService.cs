@@ -14,6 +14,5 @@ namespace QuebecAdventures.Application.Interfaces
         Task<Activity> AddActivityAsync(CreateActivityDto dto);
         Task UpdateAsync(Guid id, CreateActivityDto dto);
         Task DeleteAsync(Guid id);
-        Task UpdateCoverImageAsync(Guid id, byte[] content, string contentType);
     }
 }

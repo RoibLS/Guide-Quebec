@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using QuebecAdventures.Domain.Entities;
+using QuebecAdventures.Domain.Enums;
 
 namespace QuebecAdventures.Infrastructure.Persistence;
 

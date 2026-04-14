@@ -25,17 +25,13 @@ namespace QuebecAdventures.Application.Services
             {
                 Id = Guid.NewGuid(),
                 ActivityId = id,
-                UserName = reviewDto.UserName,
+                UserId = reviewDto.UserId,
                 Rating = reviewDto.Rating,
                 Comment = reviewDto.Comment,
-                Date = DateTime.UtcNow,
-                UserId = "Anonymous"
+                Date = DateTime.UtcNow
             };
 
             await _reviewRepository.AddReviewAsync(review);
-
-            _activityRepository.UpdateAverageRating(activity);
-
             return review;
         }
     }

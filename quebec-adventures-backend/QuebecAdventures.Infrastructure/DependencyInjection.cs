@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using QuebecAdventures.Application.Interfaces;
 using QuebecAdventures.Domain.Interfaces;
 using QuebecAdventures.Infrastructure.Persistence;
-using QuebecAdventures.Infrastructure.Services;
 
 namespace QuebecAdventures.Infrastructure
 {
@@ -21,9 +20,6 @@ namespace QuebecAdventures.Infrastructure
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IActivityRepository, ActivityRepository>();
             services.AddScoped<IReviewRepository, ReviewRepository>();
-
-            // Services d'infrastructure (fichiers, emails, etc.)
-            services.AddScoped<IImageService, ImageService>();
 
             return services;
         }

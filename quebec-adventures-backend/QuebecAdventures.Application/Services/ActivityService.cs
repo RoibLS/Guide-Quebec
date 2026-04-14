@@ -39,16 +39,20 @@ namespace QuebecAdventures.Application.Services
                 PriceRange = dto.PriceRange,
                 Difficulty = dto.Difficulty,
                 City = dto.City,
+                Address = dto.Address,
                 DistanceFromMontreal = dto.DistanceFromMontreal,
-                Season = dto.Season,
+
+                IsVisited = dto.IsVisited,
+                VisitedAt = dto.VisitedAt,
+                IsFavorite = dto.IsFavorite,
+                WishlistNote = dto.WishlistNote,
+
+                Seasons = dto.Seasons,
                 Duration = dto.Duration,
                 Tags = dto.Tags,
                 Images = dto.Images,
-                // Note: CoverImage est maintenant une propriété calculée read-only
-                // Si le DTO contient une URL, on l'ignore ici car on veut des bytes
-                // CoverImage = dto.CoverImage, 
+                CoverImage = dto.CoverImage,
                 Website = dto.Website,
-                Rating = dto.Rating,
                 CreatedBy = "System",
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
@@ -60,7 +64,8 @@ namespace QuebecAdventures.Application.Services
 
         public async Task UpdateAsync(Guid id, CreateActivityDto dto)
         {
-            var activity = await _activityRepository.GetByIdAsync(id) ?? throw new KeyNotFoundException($"Activité {id} introuvable");
+            var activity = await _activityRepository.GetByIdAsync(id)
+                           ?? throw new KeyNotFoundException($"Activité {id} introuvable");
 
             activity.Title = dto.Title;
             activity.Description = dto.Description;
@@ -69,14 +74,20 @@ namespace QuebecAdventures.Application.Services
             activity.PriceRange = dto.PriceRange;
             activity.Difficulty = dto.Difficulty;
             activity.City = dto.City;
+            activity.Address = dto.Address;
             activity.DistanceFromMontreal = dto.DistanceFromMontreal;
-            activity.Season = dto.Season;
+
+            activity.IsVisited = dto.IsVisited;
+            activity.VisitedAt = dto.VisitedAt;
+            activity.IsFavorite = dto.IsFavorite;
+            activity.WishlistNote = dto.WishlistNote;
+
+            activity.Seasons = dto.Seasons;
             activity.Duration = dto.Duration;
             activity.Tags = dto.Tags;
             activity.Images = dto.Images;
-            // activity.CoverImage = dto.CoverImage; // Read-only now
+            activity.CoverImage = dto.CoverImage;
             activity.Website = dto.Website;
-            activity.Rating = dto.Rating;
             activity.UpdatedAt = DateTime.UtcNow;
 
             await _unitOfWork.SaveChangesAsync();
@@ -87,17 +98,6 @@ namespace QuebecAdventures.Application.Services
             var activity = await _activityRepository.GetByIdAsync(id) ?? throw new KeyNotFoundException($"Activité {id} introuvable");
 
             await _activityRepository.DeleteActivityAsync(activity);
-        }
-
-        public async Task UpdateCoverImageAsync(Guid id, byte[] content, string contentType)
-        {
-            var activity = await _activityRepository.GetByIdAsync(id) ?? throw new KeyNotFoundException($"Activité {id} introuvable");
-            
-            activity.CoverImageContent = content;
-            activity.CoverImageMimeType = contentType;
-            activity.UpdatedAt = DateTime.UtcNow;
-            
-            await _unitOfWork.SaveChangesAsync();
         }
     }
 }

@@ -40,22 +40,6 @@ namespace QuebecAdventures.API.Controllers
             return Ok(activity);
         }
 
-        // --- NOUVEAU : Endpoint pour servir l'image ---
-        [HttpGet("{id:guid}/cover")]
-        public async Task<IActionResult> GetCoverImage(Guid id)
-        {
-            var activity = await _activityService.GetByIdAsync(id);
-            
-            if (activity == null || activity.CoverImageContent == null)
-            {
-                // Retourne une image par défaut ou 404
-                return NotFound("Aucune image de couverture");
-            }
-
-            return File(activity.CoverImageContent, activity.CoverImageMimeType ?? "image/jpeg");
-        }
-        // ----------------------------------------------
-
         [HttpPost]
         public async Task<ActionResult<Activity>> Create(CreateActivityDto dto)
         {
@@ -102,31 +86,6 @@ namespace QuebecAdventures.API.Controllers
             catch (KeyNotFoundException)
             {
                 return NotFound("Activité introuvable");
-            }
-        }
-
-        [HttpPost("{id}/upload-cover")]
-        public async Task<IActionResult> UploadCover(Guid id, IFormFile file)
-        {
-            try
-            {
-                // 1. Conversion en bytes via ImageService
-                var (content, contentType) = await _imageService.ProcessImageAsync(file);
-                
-                // 2. Sauvegarde en DB via ActivityService
-                await _activityService.UpdateCoverImageAsync(id, content, contentType);
-
-                // 3. Retourne l'URL de l'endpoint d'image pour mise à jour du front
-                var imageUrl = $"/api/activities/{id}/cover";
-                return Ok(new { url = imageUrl });
-            }
-            catch (KeyNotFoundException)
-            {
-                return NotFound("Activité introuvable");
-            }
-            catch (ArgumentException ex)
-            {
-                return BadRequest(ex.Message);
             }
         }
     }
