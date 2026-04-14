@@ -74,3 +74,16 @@ desktop.ini
 *.swp
 *.swo
 *.orig
+
+# Secrets locaux .NET (ne jamais commiter)
+**/appsettings.Development.json
+**/appsettings.*.json
+!**/appsettings.json
+
+# Variables d'environnement locales
+.env
+.env.local
+.env.development
+
+# Angular environment files avec secrets
+**/environment.local.ts
