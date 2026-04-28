@@ -1,43 +1,45 @@
 import { ActivityType, Season, Duration, Region, Difficulty, PriceRange } from './enums';
 
-
-// Interface principale pour une activité
 export interface Activity {
   id: string;
   title: string;
   description: string;
   type: ActivityType;
-  season: Season[];
-  duration: Duration;
   region: Region;
-  
+
   // Localisation
-  address?: string;
   city: string;
-  
-  // Distance depuis Montréal (en km)
+  address?: string;
   distanceFromMontreal?: number;
-  
+
+  //Statut journal
+  isVisited?: boolean;
+  visitedAt?: Date;
+  isFavorite: boolean;
+  wishlistNote?: string;
+
+  //Caractéristiques
+  season: Season;
+  duration: Duration;
+  priceRange?: PriceRange;
+  difficulty?: Difficulty;
+
   // Évaluation
   rating: number; // Note sur 10
-  isFavorite: boolean;
   reviews: Review[];
-  
+
   // Médias
-  images: string[];
   coverImage: string;
-  
+  images: string[];
+
   // Informations pratiques
   website?: string;
-  phone?: string;
-  priceRange?: PriceRange;
-  difficulty?: Difficulty; // Pour activités sportives
-  
+  tags: string[];
+
   // Métadonnées
+  createdBy: string;
   createdAt: Date;
   updatedAt: Date;
-  createdBy: string; // ID de l'utilisateur
-  tags: string[];
 }
 
 // Interface pour les avis/commentaires
@@ -46,7 +48,7 @@ export interface Review {
   activityId: string;
   userId: string;
   userName: string;
-  rating: number; // Note sur 10
+  rating: number;
   comment: string;
   date: Date;
   images?: string[];
@@ -68,7 +70,7 @@ export interface CreateActivityDto {
   title: string;
   description: string;
   type: ActivityType;
-  season: Season[];
+  season: Season;
   duration: Duration;
   region: Region;
   city: string;
@@ -80,6 +82,7 @@ export interface CreateActivityDto {
   tags: string[];
   images: string[];
   coverImage: string;
+  distanceFromMontreal? : number;
 }
 
 export interface CreateReviewDto {

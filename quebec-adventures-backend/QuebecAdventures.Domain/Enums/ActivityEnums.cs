@@ -69,6 +69,6 @@ namespace QuebecAdventures.Domain.Enums
         Printemps,
         Ete,
         Automne,
-        Tout
+        TouteAnnee
     }
 }

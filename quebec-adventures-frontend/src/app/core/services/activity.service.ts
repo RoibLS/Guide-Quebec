@@ -61,7 +61,7 @@ export class ActivityService {
 
     // Filtre par saison
     if (filters.season && filters.season.length > 0) {
-      activities = activities.filter((a) => a.season.some((s) => filters.season!.includes(s)));
+      activities = activities.filter((a) => filters.season!.includes(a.season));
     }
 
     // Filtre par durée
@@ -128,7 +128,7 @@ export class ActivityService {
   }
 
     getActivitiesWithinDistance(maxDistance: number): Activity[] {
-    return this.getAllActivities().filter(a => 
+    return this.getAllActivities().filter(a =>
       a.distanceFromMontreal !== undefined && a.distanceFromMontreal <= maxDistance
     );
   }

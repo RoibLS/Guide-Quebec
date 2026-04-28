@@ -4,8 +4,9 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ActivityApiService } from '../services/activity-api.service';
 import { debounceTime, distinctUntilChanged, of, Subject, switchMap } from 'rxjs';
-import { ActivityType, Region, PriceRange, Difficulty, Duration } from '../../../core/models/enums';
-import { GeocodingService } from '../../../core/services/geocoding.service';
+import {ActivityType, Region, PriceRange, Difficulty, Duration, Season} from '../../../core/models/enums';
+import {GeocodingResult, GeocodingService} from '../../../core/services/geocoding.service';
+import {CreateActivityDto} from '../../../core/models/activity.model';
 
 
 @Component({
@@ -25,11 +26,10 @@ export class ActivityFormComponent implements OnInit {
   isEditMode = false;
   activityId: string | null = null;
 
-  citySuggestions: any[] = [];
+  citySuggestions: GeocodingResult[] = [];
   showSuggestions = false;
   private searchTerms = new Subject<string>();
 
-  // Options correspondants aux Enums C# (PascalCase)
   types = Object.values(ActivityType);
   regions = Object.values(Region);
   prices = Object.values(PriceRange);
@@ -43,7 +43,8 @@ export class ActivityFormComponent implements OnInit {
     region: ['Montreal', Validators.required],
     city: ['', Validators.required],
     priceRange: ['Modere'],
-    difficulty: ['Facile'], // Optionnel, selon le type d'activité
+    difficulty: ['Facile'],
+    season: ['Ete', Validators.required],
     rating: [0, [Validators.min(0), Validators.max(10)]],
     coverImage: [''],
     website: [''],
@@ -63,14 +64,14 @@ export class ActivityFormComponent implements OnInit {
       })
     ).subscribe(activity => {
       if (activity) {
-        // Remplir le formulaire en cas d'édition
         this.form.patchValue({
           title: activity.title,
           description: activity.description,
-          type: activity.type as string, // Cast simple car le back renvoie la string de l'enum
+          type: activity.type as string,
           region: activity.region as string,
           city: activity.city,
           priceRange: activity.priceRange as string,
+          season: activity.season as string,
           difficulty: activity.difficulty as string,
           rating: activity.rating,
           coverImage: activity.coverImage,
@@ -100,26 +101,21 @@ export class ActivityFormComponent implements OnInit {
 
     const val = this.form.value;
 
-    // Construction du DTO
-    const dto: any = {
+    const dto: CreateActivityDto = {
       title: val.title!,
       description: val.description!,
-      type: val.type,
-      region: val.region,
+      type: val.type as ActivityType,
+      region: val.region as Region,
       city: val.city!,
-      priceRange: val.priceRange,
-      difficulty: val.difficulty, // Peut être null côté back si non pertinent
-      
-      rating: val.rating || 0,
-      coverImage: val.coverImage || '',
-      website: val.website || null,
-      duration: val.duration || '2h',
-
-      // Valeurs par défaut pour les champs non gérés dans ce formulaire simple
-      season: ['Ete'], 
+      priceRange: val.priceRange as PriceRange,
+      difficulty: val.difficulty as Difficulty,
+      season: val.season as Season,
       distanceFromMontreal: 0,
       images: [],
-      tags: []
+      tags: [],
+      coverImage: val.coverImage || '',
+      website: val.website || undefined,
+      duration: val.duration as Duration
     };
 
     if (this.isEditMode && this.activityId) {
@@ -135,27 +131,21 @@ export class ActivityFormComponent implements OnInit {
     }
   }
 
-   // Méthode appelée quand l'utilisateur tape dans le champ Ville
   onCityInput(event: Event) {
     const val = (event.target as HTMLInputElement).value;
     this.searchTerms.next(val);
   }
 
-  // Méthode appelée quand l'utilisateur clique sur une suggestion
   selectCity(suggestion: any) {
     this.form.patchValue({
       city: suggestion.name,
-      // Si tu avais un champ région, tu pourrais essayer de le mapper
-      // region: this.mapRegion(suggestion.region) 
     });
-    
+
     this.showSuggestions = false;
     this.citySuggestions = [];
   }
-  
-  // Pour cacher la liste si on clique ailleurs (optionnel mais mieux)
+
   closeSuggestions() {
-    // Petit délai pour laisser le temps au clic "selectCity" de se faire
     setTimeout(() => this.showSuggestions = false, 200);
   }
 

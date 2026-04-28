@@ -33,11 +33,11 @@ namespace QuebecAdventures.Domain.Entities
 
         // === MÉDIAS ===
         public string CoverImage { get; set; } = string.Empty;  // URL externe uniquement
-        public List<string> Images { get; set; } = new();
+        public List<string> Images { get; set; } = [];
 
         // === INFOS PRATIQUES ===
         public string? Website { get; set; }
-        public List<string> Tags { get; set; } = new();
+        public List<string> Tags { get; set; } = [];
 
         // === MÉTADONNÉES ===
         public string CreatedBy { get; set; } = string.Empty;
@@ -49,8 +49,8 @@ namespace QuebecAdventures.Domain.Entities
 
         // === PROPRIÉTÉ CALCULÉE (pas en base) ===
         // Calcule la note moyenne depuis les reviews existantes
-        public double? AverageRating => Reviews.Any() 
-            ? Reviews.Average(r => r.Rating) 
+        public double? AverageRating => Reviews.Any()
+            ? Reviews.Average(r => r.Rating)
             : null;
     }
 }
